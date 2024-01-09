@@ -1,3 +1,19 @@
+# uol-agile-gorepair
+
+Team repository to develop GoRepair web application for Agile software project.
+
+Mid Term Software Proposal Report Link - https://docs.google.com/document/d/1LcRXm1dkHdu7oWD1Sc310v-MseSxZDt9uvU88MtJiSs/edit
+
+## Team Roles:
+
+###FE (React): Joel & Yash & Kris
+Delegate by Webpage (To use the same set of UI assets)
+- Eg: Home page, Admin page, Booking page, etc
+- Link to find reusable & free UI assets - https://ui.shadcn.com/
+
+###BE (Mainly Firebase): Bobby
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -34,3 +50,5 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
