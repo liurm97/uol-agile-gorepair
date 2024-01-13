@@ -3,10 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backend</title>
+    <title>GoRepair Backend</title>
 </head>
 <body>
-    <h1>Test</h1>
+    <form class="add">
+        <label for="repair_name">Repair Name:</label>
+        <input type="text" name="repair_name" required>
+        
+        <label for="repair_price">Repair Price:</label>
+        <input type="text" name="repair_price" required>
+        <input type="submit" value="Add">
+    </form>
+    <div><br></div>
+    <form class="delete">
+        <label for="id">Document Id:</label>
+        <input type="text" name="id" required>
+        <input type="submit" value="Delete">
+    </form>
     <script src="./bundle.js"></script>
 </body>
 </html>

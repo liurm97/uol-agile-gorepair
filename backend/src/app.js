@@ -1,8 +1,14 @@
 // firebase app
 import { initializeApp } from "firebase/app";
 
+import {
+  deleteRepairService,
+  addRepairService,
+  getRealtimeRepairServices,
+} from "./repairServiceActions";
+
 // firestore app
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import { getFirestore, collection } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB8wikOrixKqbm2lSW-unHcOcMlNWVUsGw",
@@ -19,30 +25,39 @@ const app = initializeApp(firebaseConfig);
 // initialize firebase database
 const db = getFirestore(app);
 
-const getRepairServices = async (database, collectionName) => {
-  try {
-    // get firestore collection
-    const repairServiceCollection = collection(database, collectionName);
+// initialize collection
+const repairServiceCollection = collection(db, "repair_services");
 
-    // get documents from collection
-    const repairServicesSnapshot = await getDocs(repairServiceCollection);
-    const repairServicesList = [];
+const addForm = document.querySelector(".add");
+addForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const name = addForm.repair_name.value;
+  const price = addForm.repair_price.value;
+  const addRepairServiceStatus = addRepairService(
+    repairServiceCollection,
+    name,
+    price
+  );
+  addRepairServiceStatus
+    ? alert("Add Repair Service Successfully!")
+    : alert("Add Repair Service Unsuccessful");
+  addForm.reset();
+});
 
-    // add document data, document id to list of dictionary
-    repairServicesSnapshot.forEach((snapshot) => {
-      repairServicesList.push({
-        ...snapshot.data(),
-        id: snapshot.id,
-      });
-    });
-    return repairServicesList;
-  } catch (error) {
-    console.error(error);
-  }
-  //   const repairServicesList = repairServicesSnapshot.docs.map(
-  //     (doc) => (d["data"] = doc.data())
-  //   );
-};
+const deleteForm = document.querySelector(".delete");
+deleteForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const doc_id = deleteForm.id.value;
+  console.log(doc_id);
+  const deleteRepairServiceStatus = deleteRepairService(
+    db,
+    "repair_services",
+    doc_id
+  );
+  deleteRepairServiceStatus
+    ? alert("Delete Repair Service Successfully!")
+    : alert("Delete Repair Service Unsuccessful");
+  deleteForm.reset();
+});
 
-const repairServices = await getRepairServices(db, "repair_services");
-repairServices.map((s) => console.log(s));
+getRealtimeRepairServices(repairServiceCollection);
