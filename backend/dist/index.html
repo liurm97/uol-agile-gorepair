@@ -6,6 +6,13 @@
     <title>GoRepair Backend</title>
 </head>
 <body>
+    <h1>Repair Service</h1>
+    <a href="./login.html">Login</a>
+    <br>
+    <br>
+    <a href="./signup.html">Signup</a>
+    <div><br></div>
+
     <form class="add">
         <label for="repair_name">Repair Name:</label>
         <input type="text" name="repair_name" required>
@@ -20,6 +27,17 @@
         <input type="text" name="id" required>
         <input type="submit" value="Delete">
     </form>
+    <div><br></div>
+    <form class="update">
+        <label for="id">Document Id:</label>
+        <input type="text" name="id" required>
+        <label for="updateRepairName">Repair Name:</label>
+        <input type="text" name="updateRepairName">
+        <label for="updateRepairPrice]">Repair Price:</label>
+        <input type="text" name="updateRepairPrice">
+        <input type="submit" value="Update">
+    </form>
+    <p class="updateFormValidationMsg"></p>
     <script src="./bundle.js"></script>
 </body>
 </html>
