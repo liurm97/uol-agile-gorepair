@@ -4,8 +4,9 @@ import HeroSection from '@/components/HeroSection'
 import Features from '@/components/Features'
 import CtaButton from '@/components/CtaButton'
 import Reviews from '@/components/Reviews'
+import Link from 'next/link';
 
-export default function Home()
+export default function sign()
 {
   return (
     <>
