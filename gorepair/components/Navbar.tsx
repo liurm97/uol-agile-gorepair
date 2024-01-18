@@ -22,7 +22,6 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons'
-import Link from 'next/link';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
@@ -55,7 +54,8 @@ export default function WithSubnavigation() {
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
-            Logo
+            
+            <Button as={"a"} href ="/">Logo</Button>
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -68,12 +68,8 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-            <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
-            <Link href="/sign" passHref>
-            <Button as="a" fontSize={'sm'} fontWeight={400} variant={'link'}>
-              Sign In
-            </Button>
-          </Link>
+          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'/signin'}>
+            Sign In
           </Button>
           <Button
             as={'a'}
@@ -82,7 +78,7 @@ export default function WithSubnavigation() {
             fontWeight={600}
             color={'white'}
             bg={'pink.400'}
-            href={'#'}
+            href={'/signup'}
             _hover={{
               bg: 'pink.300',
             }}>
@@ -248,41 +244,19 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: 'Inspiration',
+    label: 'Services',
     children: [
       {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
+        label: 'Plumbing',
+        subLabel: 'Book now!',
         href: '#',
       },
       {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
+        label: 'Electrical',
+        subLabel: 'Book now!',
         href: '#',
       },
     ],
   },
-  {
-    label: 'Find Work',
-    children: [
-      {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
-      },
-    ],
-  },
-  {
-    label: 'Learn Design',
-    href: '#',
-  },
-  {
-    label: 'Hire Designers',
-    href: '#',
-  },
+  
 ]
