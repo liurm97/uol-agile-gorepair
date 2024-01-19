@@ -118,3 +118,5 @@ export const getSingleDocument = async (_collection, _docID) => {
     return false;
   }
 };
+
+// Update document is in `app.js`
