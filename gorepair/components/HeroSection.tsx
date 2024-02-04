@@ -41,10 +41,12 @@ export default function CallToActionWithAnnotation() {
             alignSelf={'center'}
             position={'relative'}>
             <Button
+              as={'a'}
               colorScheme={'green'}
               bg={'green.400'}
               rounded={'full'}
               px={6}
+              href={'/booking'}
               _hover={{
                 bg: 'green.500',
               }}>
