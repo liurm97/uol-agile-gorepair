@@ -14,6 +14,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@natscale/react-calendar": "^0.0.0-beta.26",
     "framer-motion": "^10.17.12",
     "next": "14.0.4",
     "react": "^18",

@@ -32,30 +32,80 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter
+  CardFooter,
+  Image,
+  Center,
+  HStack,
+  Wrap,
+  WrapItem
 } from '@chakra-ui/react'
 
 import { useToast } from '@chakra-ui/react'
 import { Span } from 'next/dist/trace'
+import Calendar from '@/components/Calendar'
+
+function decreaseOrder(id) {
+  var orderLine = document.getElementById(id);
+  if (orderLine){
+    let value = orderLine.innerHTML
+      if (value != "0")
+        orderLine.innerHTML = (Number(value) - 1).toString();
+  }
+}
+function increaseOrder(id) {
+  var orderLine = document.getElementById(id);
+  if (orderLine){
+    let value = orderLine.innerHTML
+        orderLine.innerHTML = (Number(value) + 1).toString();
+  }
+}
+function selected(id) {
+  var time = document.getElementById(id);
+  var check = document.getElementsByClassName('selected')
+  if (check.length != 0){
+    check[0].removeAttribute('class');
+    check[0].style.background =  'gray';
+  }
+  if (time){
+    time.className = 'selected';
+    time.style.background =  '#555555';
+
+  }
+}
 
 const Form1 = () => {
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="2%">
-        Choose a Service
+      <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="5%">
+        Choose a Service Category
       </Heading>
-      <Flex>
-        <Card>
-          <CardHeader><Text fontSize={'lg'} fontWeight={'bold'}>Electrical</Text></CardHeader>
-          <CardBody>
-            Service 1
-            <Button> - </Button>
-            <Text> 0 </Text>
-            <Button> + </Button>
-          </CardBody>
-        </Card>
+      <Flex justifyContent="space-between">
+          <Card w="200px">
+            <Center>
+              <Image src="https://www.svgrepo.com/show/75634/electric-current-symbol.svg" alt="Electrical Icon" boxSize="100px"/>
+            </Center>
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical</Text></CardHeader>
+          </Card>
+          <Card w="200px">
+            <Center>
+              <Image src="https://www.svgrepo.com/show/283208/plumbering-plumber.svg" alt="Plumbing Icon" boxSize="100px"/>
+            </Center>
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Plumbing</Text></CardHeader>
+          </Card>
+          <Card w="200px">
+            <Center>
+              <Image src="https://www.svgrepo.com/show/28040/carpentry.svg" alt="Electrical Icon" boxSize="100px"/>
+            </Center>
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Woodwork</Text></CardHeader>
+          </Card>
+          <Card w="200px">
+            <Center>
+              <Image src="https://www.svgrepo.com/show/485927/tools.svg" alt="Electrical Icon" boxSize="100px"/>
+            </Center>
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Handyman</Text></CardHeader>
+          </Card>
       </Flex>
     </>
   )
@@ -64,135 +114,55 @@ const Form1 = () => {
 const Form2 = () => {
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
-        User Details
+      <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="5%">
+        Which Services Do You Need?
       </Heading>
-      <FormControl as={GridItem} colSpan={[6, 3]}>
-        <FormLabel
-          htmlFor="country"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: 'gray.50',
-          }}>
-          Country / Region
-        </FormLabel>
-        <Select
-          id="country"
-          name="country"
-          autoComplete="country"
-          placeholder="Select option"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md">
-          <option>United States</option>
-          <option>Canada</option>
-          <option>Mexico</option>
-        </Select>
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={6}>
-        <FormLabel
-          htmlFor="street_address"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: 'gray.50',
-          }}
-          mt="2%">
-          Street address
-        </FormLabel>
-        <Input
-          type="text"
-          name="street_address"
-          id="street_address"
-          autoComplete="street-address"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
-        <FormLabel
-          htmlFor="city"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: 'gray.50',
-          }}
-          mt="2%">
-          City
-        </FormLabel>
-        <Input
-          type="text"
-          name="city"
-          id="city"
-          autoComplete="city"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-        <FormLabel
-          htmlFor="state"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: 'gray.50',
-          }}
-          mt="2%">
-          State / Province
-        </FormLabel>
-        <Input
-          type="text"
-          name="state"
-          id="state"
-          autoComplete="state"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-        <FormLabel
-          htmlFor="postal_code"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: 'gray.50',
-          }}
-          mt="2%">
-          ZIP / Postal
-        </FormLabel>
-        <Input
-          type="text"
-          name="postal_code"
-          id="postal_code"
-          autoComplete="postal-code"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
+      <Flex justifyContent="space-between">
+          <Card w="200px">
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 1</Text></CardHeader>
+            <CardBody>
+              <HStack>
+                <Text as="span" mr="10px">Service 1</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test1")}> - </Button>
+                <Text as="span" id="test1">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test1")}> + </Button>
+              </HStack>
+            </CardBody>
+          </Card>
+          <Card w="200px">
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 2</Text></CardHeader>
+            <CardBody>
+              <HStack>
+                <Text as="span" mr="10px">Service 1</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test2")}> - </Button>
+                <Text as="span" id="test2">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test2")}> + </Button>
+              </HStack>
+            </CardBody>
+          </Card>
+          <Card w="200px">
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 3</Text></CardHeader>
+            <CardBody>
+              <HStack>
+                <Text as="span" mr="10px">Service 1</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test3")}> - </Button>
+                <Text as="span" id="test3">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test3")}> + </Button>
+              </HStack>
+            </CardBody>
+          </Card>
+          <Card w="200px">
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 4</Text></CardHeader>
+            <CardBody>
+              <HStack>
+                <Text as="span" mr="10px">Service 1</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test4")}> - </Button>
+                <Text as="span" id="test4">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test4")}> + </Button>
+              </HStack>
+            </CardBody>
+          </Card>
+      </Flex>
     </>
   )
 }
@@ -200,135 +170,84 @@ const Form2 = () => {
 const Form3 = () => {
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
-        User Details
+      <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="5%">
+        Book Your Slot
       </Heading>
-      <FormControl as={GridItem} colSpan={[6, 3]}>
-        <FormLabel
-          htmlFor="country"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: 'gray.50',
-          }}>
-          Country / Region
-        </FormLabel>
-        <Select
-          id="country"
-          name="country"
-          autoComplete="country"
-          placeholder="Select option"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md">
-          <option>United States</option>
-          <option>Canada</option>
-          <option>Mexico</option>
-        </Select>
-      </FormControl>
+      <Flex justifyContent="space-between">
+          <Card w="200px">
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Summary</Text></CardHeader>
+            <CardBody>
+              <HStack mb="10px">
+                <Text as="span" mr="10px">Service 1</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test1")}> - </Button>
+                <Text as="span" id="test1">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test1")}> + </Button>
+              </HStack>
+              <HStack mb="10px">
+                <Text as="span" mr="10px">Service 2</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test3")}> - </Button>
+                <Text as="span" id="test3">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test3")}> + </Button>
+              </HStack>
+              <HStack mb="10px">
+                <Text as="span" mr="10px">Service 3</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test3")}> - </Button>
+                <Text as="span" id="test3">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test3")}> + </Button>
+              </HStack>
+              <HStack mb="10px">
+                <Text as="span" mr="10px">Service 4</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test4")}> - </Button>
+                <Text as="span" id="test4">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test4")}> + </Button>
+              </HStack>
+            </CardBody>
+          </Card>
 
-      <FormControl as={GridItem} colSpan={6}>
-        <FormLabel
-          htmlFor="street_address"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: 'gray.50',
-          }}
-          mt="2%">
-          Street address
-        </FormLabel>
-        <Input
-          type="text"
-          name="street_address"
-          id="street_address"
-          autoComplete="street-address"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
-        <FormLabel
-          htmlFor="city"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: 'gray.50',
-          }}
-          mt="2%">
-          City
-        </FormLabel>
-        <Input
-          type="text"
-          name="city"
-          id="city"
-          autoComplete="city"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-        <FormLabel
-          htmlFor="state"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: 'gray.50',
-          }}
-          mt="2%">
-          State / Province
-        </FormLabel>
-        <Input
-          type="text"
-          name="state"
-          id="state"
-          autoComplete="state"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-        <FormLabel
-          htmlFor="postal_code"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: 'gray.50',
-          }}
-          mt="2%">
-          ZIP / Postal
-        </FormLabel>
-        <Input
-          type="text"
-          name="postal_code"
-          id="postal_code"
-          autoComplete="postal-code"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
+          <Card>
+            <CardHeader pb="0px"><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Date</Text></CardHeader>
+            <CardBody>
+            <Calendar></Calendar>
+            </CardBody>
+          </Card>
+          <Card w="318px">
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Time</Text></CardHeader>
+            <CardBody>
+              <Wrap spacing={5} justify="center">
+                <WrapItem>
+                  <Button w="100px" colorScheme='gray' id='t9' onClick={()=> selected('t9')}>09:00 AM</Button>
+                </WrapItem>
+                <WrapItem>
+                  <Button w="100px" colorScheme='gray' id='t10' onClick={()=> selected('t10')}>10:00 AM</Button>
+                </WrapItem>
+                <WrapItem>
+                  <Button w="100px" colorScheme='gray' id='t11' onClick={()=> selected('t11')}>11:00 AM</Button>
+                </WrapItem>
+                <WrapItem>
+                  <Button w="100px" colorScheme='gray' id='t12' onClick={()=> selected('t12')}>12:00 PM</Button>
+                </WrapItem>
+                <WrapItem>
+                  <Button w="100px" colorScheme='gray' id='t1' onClick={()=> selected('t1')}>01:00 PM</Button>
+                </WrapItem>
+                <WrapItem>
+                  <Button w="100px" colorScheme='gray' id='t2' onClick={()=> selected('t2')}>02:00 PM</Button>
+                </WrapItem>
+                <WrapItem>
+                  <Button w="100px" colorScheme='gray' id='t3' onClick={()=> selected('t3')}>03:00 PM</Button>
+                </WrapItem>
+                <WrapItem>
+                  <Button w="100px" colorScheme='gray' id='t4' onClick={()=> selected('t4')}>04:00 PM</Button>
+                </WrapItem>
+                <WrapItem>
+                  <Button w="100px" colorScheme='gray' id='t5' onClick={()=> selected('t5')}>05:00 PM</Button>
+                </WrapItem>
+                <WrapItem>
+                  <Button w="100px" colorScheme='gray' id='t6' onClick={() => selected('t6')}>06:00 PM</Button>
+                </WrapItem>
+              </Wrap>
+            </CardBody>
+          </Card>
+      </Flex>
     </>
   )
 }
@@ -336,63 +255,56 @@ const Form3 = () => {
 const Form4 = () => {
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal">
-        Social Handles
+        <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="5%">
+        Book Your Slot
       </Heading>
-      <SimpleGrid columns={1} spacing={6}>
-        <FormControl as={GridItem} colSpan={[3, 2]}>
-          <FormLabel
-            fontSize="sm"
-            fontWeight="md"
-            color="gray.700"
-            _dark={{
-              color: 'gray.50',
-            }}>
-            Website
-          </FormLabel>
-          <InputGroup size="sm">
-            <InputLeftAddon
-              bg="gray.50"
-              _dark={{
-                bg: 'gray.800',
-              }}
-              color="gray.500"
-              rounded="md">
-              http://
-            </InputLeftAddon>
-            <Input
-              type="tel"
-              placeholder="www.example.com"
-              focusBorderColor="brand.400"
-              rounded="md"
-            />
-          </InputGroup>
-        </FormControl>
+      <Flex justifyContent="space-between">
+          <Card w="200px">
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Summary</Text></CardHeader>
+            <CardBody>
+              <HStack mb="10px">
+                <Text as="span" mr="10px">Service 1</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test1")}> - </Button>
+                <Text as="span" id="test1">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test1")}> + </Button>
+              </HStack>
+              <HStack mb="10px">
+                <Text as="span" mr="10px">Service 2</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test3")}> - </Button>
+                <Text as="span" id="test3">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test3")}> + </Button>
+              </HStack>
+              <HStack mb="10px">
+                <Text as="span" mr="10px">Service 3</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test3")}> - </Button>
+                <Text as="span" id="test3">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test3")}> + </Button>
+              </HStack>
+              <HStack mb="10px">
+                <Text as="span" mr="10px">Service 4</Text>
+                <Button size='xs' onClick={()=> decreaseOrder("test4")}> - </Button>
+                <Text as="span" id="test4">0</Text>
+                <Button size='xs' onClick={()=> increaseOrder("test4")}> + </Button>
+              </HStack>
+            </CardBody>
+          </Card>
 
-        <FormControl id="email" mt={1}>
-          <FormLabel
-            fontSize="sm"
-            fontWeight="md"
-            color="gray.700"
-            _dark={{
-              color: 'gray.50',
-            }}>
-            About
-          </FormLabel>
-          <Textarea
-            placeholder="you@example.com"
-            rows={3}
-            shadow="sm"
-            focusBorderColor="brand.400"
-            fontSize={{
-              sm: 'sm',
-            }}
-          />
-          <FormHelperText>
-            Brief description for your profile. URLs are hyperlinked.
-          </FormHelperText>
-        </FormControl>
-      </SimpleGrid>
+          <Card>
+            <CardHeader pb="0px"><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Date & Time</Text></CardHeader>
+            <CardBody>
+              <Text fontSize={'xl'} textAlign={'center'}>05th February, 2024</Text> 
+              <Text fontSize={'lg'} textAlign={'center'}>at</Text>
+              <Text fontSize={'xl'} textAlign={'center'}>06:00 PM</Text>
+            </CardBody>
+          </Card>
+          <Card w="318px">
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Address</Text></CardHeader>
+            <CardBody>
+              <Text fontSize={'lg'} textAlign={'center'}>Arriving At:</Text>
+              <Text fontSize={'xl'} textAlign={'center'}>1, Canary Wharf, Not a Place</Text>
+            </CardBody>
+          </Card>
+      </Flex>
     </>
   )
 }
@@ -416,8 +328,7 @@ export default function Multistep() {
         borderWidth="1px"
         rounded="lg"
         shadow="1px 1px 3px rgba(0,0,0,0.3)"
-        maxWidth={800}
-        minHeight={"70vh"}
+        maxWidth={1000}
         p={6}
         m="10px auto"
         as="form">
@@ -457,10 +368,10 @@ export default function Multistep() {
                 variant="solid"
                 onClick={() => {
                   toast({
-                    title: 'Account created.',
-                    description: "We've created your account for you.",
+                    title: 'Request Submitted.',
+                    description: "We've submitted your request. You will be connected with a technician shortly.",
                     status: 'success',
-                    duration: 3000,
+                    duration: 5000,
                     isClosable: true,
                   })
                 }}>
