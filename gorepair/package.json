@@ -15,11 +15,13 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@natscale/react-calendar": "^0.0.0-beta.26",
+    "firebase": "^10.8.0",
+    "firebase-cli": "^1.2.0",
     "framer-motion": "^10.17.12",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^4.12.0",
+    "react-icons": "^4.12.0"
   },
   "devDependencies": {
     "@types/node": "^20",
