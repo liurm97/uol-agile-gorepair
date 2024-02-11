@@ -18,7 +18,7 @@ import { onSnapshot } from 'firebase/firestore';
 // Assets
 
 type RowObj = {
-	name: string;
+	service: string;
 	price: number;
 	order: string;
 };
@@ -29,17 +29,15 @@ const columnHelper = createColumnHelper<RowObj>();
 export default function ComplexTable(props: { tableData: any }) {
 	const { tableData } = props;
 	const [ sorting, setSorting ] = React.useState<SortingState>([]);	
-	const [button, setButton] = React.useState<boolean>(false);
-	React.useEffect(() =>
-	{
-		console.log("button clicked")
-	}, button)
+	const [buttonState, setButtonState] = React.useState<boolean>(false);
 	const textColor = useColorModeValue('secondaryGray.900', 'white');
 	const iconColor = useColorModeValue('secondaryGray.500', 'white');
 	const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
 	let defaultData = tableData;
+	const [ data, setData ] = React.useState(() => [ ...defaultData ]);
+
 	const columns = [
-		columnHelper.accessor('name', {
+		columnHelper.accessor('service', {
 			id: 'service',
 			header: () => (
 				<Text justifyContent='space-between' align='center' fontSize={{ sm: '10px', lg: '12px' }} color='gray.400'>
@@ -77,23 +75,20 @@ export default function ComplexTable(props: { tableData: any }) {
 			cell: (info) => (
 				<Button colorScheme='blue' size='sm' onClick={async () =>
 				{
-					setButton(true)
+					setButtonState(true)
+					console.log(buttonState)
 					const indToDelete = info.cell.id.split("_")[0]
 					console.log(indToDelete)
 					await firebaseObject.deleteSpecificService("Electrical", indToDelete)
-					setButton(false)
 				}}>
 					Delete
 				</Button>
 			)
 		}),
 	];
-	const [ data, setData ] = React.useState(() => [ ...defaultData ]);
 
-	// React.useEffect(() =>
-	// {
-	// 	console.log("changed")
-	// }, data)
+
+
 	const table = useReactTable({
 		data,
 		columns,
@@ -144,7 +139,7 @@ export default function ComplexTable(props: { tableData: any }) {
 						))}
 					</Thead>
 					<Tbody>
-						{table.getRowModel().rows.slice(0, 11).map((row) => {
+						{table.getRowModel().rows.slice(0, 20).map((row) => {
 							return (
 								<Tr key={row.id}>
 									{row.getVisibleCells().map((cell) => {
