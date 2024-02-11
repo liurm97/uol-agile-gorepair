@@ -13,6 +13,8 @@ import Card from 'components/card/Card';
 import { Button } from '@chakra-ui/react';
 import Menu from 'components/menu/MainMenu';
 import * as React from 'react';
+import { firebaseObject } from '../../../../../config/firebaseConfig';
+import { onSnapshot } from 'firebase/firestore';
 // Assets
 
 type RowObj = {
@@ -26,14 +28,19 @@ const columnHelper = createColumnHelper<RowObj>();
 // const columns = columnsDataCheck;
 export default function ComplexTable(props: { tableData: any }) {
 	const { tableData } = props;
-	const [ sorting, setSorting ] = React.useState<SortingState>([]);
+	const [ sorting, setSorting ] = React.useState<SortingState>([]);	
+	const [button, setButton] = React.useState<boolean>(false);
+	React.useEffect(() =>
+	{
+		console.log("button clicked")
+	}, button)
 	const textColor = useColorModeValue('secondaryGray.900', 'white');
 	const iconColor = useColorModeValue('secondaryGray.500', 'white');
 	const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
 	let defaultData = tableData;
 	const columns = [
 		columnHelper.accessor('name', {
-			id: 'name',
+			id: 'service',
 			header: () => (
 				<Text justifyContent='space-between' align='center' fontSize={{ sm: '10px', lg: '12px' }} color='gray.400'>
 					Service
@@ -68,13 +75,25 @@ export default function ComplexTable(props: { tableData: any }) {
 				</Text>
 			),
 			cell: (info) => (
-				<Button colorScheme='blue' size='sm' onClick={() => window.open(info.getValue(), '_blank')}>
-					Edit
+				<Button colorScheme='blue' size='sm' onClick={async () =>
+				{
+					setButton(true)
+					const indToDelete = info.cell.id.split("_")[0]
+					console.log(indToDelete)
+					await firebaseObject.deleteSpecificService("Electrical", indToDelete)
+					setButton(false)
+				}}>
+					Delete
 				</Button>
 			)
 		}),
 	];
 	const [ data, setData ] = React.useState(() => [ ...defaultData ]);
+
+	// React.useEffect(() =>
+	// {
+	// 	console.log("changed")
+	// }, data)
 	const table = useReactTable({
 		data,
 		columns,
