@@ -14,7 +14,6 @@ import { Button } from '@chakra-ui/react';
 import Menu from 'components/menu/MainMenu';
 import * as React from 'react';
 import { firebaseObject } from '../../../../../config/firebaseConfig';
-import { onSnapshot } from 'firebase/firestore';
 // Assets
 
 type RowObj = {
@@ -75,11 +74,26 @@ export default function ComplexTable(props: { tableData: any }) {
 			cell: (info) => (
 				<Button colorScheme='blue' size='sm' onClick={async () =>
 				{
-					setButtonState(true)
-					console.log(buttonState)
+					// get the index of the service to be deleted
 					const indToDelete = info.cell.id.split("_")[0]
-					console.log(indToDelete)
-					await firebaseObject.deleteSpecificService("Electrical", indToDelete)
+
+					// delete the item
+					firebaseObject.deleteSpecificService("Electrical", indToDelete).then(() =>
+					{
+						// store collection post-deletion
+						let newData = undefined
+						
+						// wait for 1.5s for firebase to sync before retrieving the collection post-deletion
+						setTimeout(async() => {
+							try{
+								newData = await firebaseObject.retrieveSpecificServiceCategory("Electrical")
+								console.log(newData)
+								setData([...newData])
+							}catch(err){
+								console.error(err)
+							}
+						}, 1500)
+					})
 				}}>
 					Delete
 				</Button>
@@ -139,7 +153,7 @@ export default function ComplexTable(props: { tableData: any }) {
 						))}
 					</Thead>
 					<Tbody>
-						{table.getRowModel().rows.slice(0, 20).map((row) => {
+						{table.getRowModel().rows.slice(0, 25).map((row) => {
 							return (
 								<Tr key={row.id}>
 									{row.getVisibleCells().map((cell) => {

@@ -11,8 +11,8 @@ import tableDataColumns from 'views/admin/dataTables/variables/tableDataColumns'
 import tableDataComplex from 'views/admin/dataTables/variables/tableDataComplex';
 import React from 'react';
 import AdminLayout from 'layouts/admin';
-
-export default function Orders() {
+import { firebaseObject } from '../../../../config/firebaseConfig';
+export default async function Orders() {
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
       <SimpleGrid
@@ -20,7 +20,7 @@ export default function Orders() {
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: '20px', xl: '20px' }}
       >
-        <ComplexTable tableData={tableDataComplex} />
+        <ComplexTable tableData={await firebaseObject.retrieveOrders()} />
 
       </SimpleGrid>
     </Box>

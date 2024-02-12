@@ -11,6 +11,8 @@ import {
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
+// ======================== Set up ====================== //
+
 // firebase configuration details
 const firebaseConfig = {
   apiKey: 'AIzaSyB8wikOrixKqbm2lSW-unHcOcMlNWVUsGw',
@@ -30,12 +32,12 @@ const _db = getFirestore(_app);
 // initialize firestore auth service
 const _auth = getAuth(_app);
 
+// ================== Admin Panel - Services table ================= //
 /**
  * Get all services in a category in `services` firestore collection
  * @param {string} _category
- * @returns {[object]}
  */
-const _retrieveSpecificCategory = async (_category) => {
+const _retrieveSpecificServiceCategory = async (_category) => {
   const data = [];
 
   // filter data in the `services` collection by category
@@ -95,12 +97,48 @@ const _deleteService = async (docID) => {
   }
 };
 
+// ================== Admin Panel - Orders table ================= //
+const _retrieveOrders = async () => {
+  const data = [];
+  const snapshots = await getDocs(collection(_db, 'orders'));
+  snapshots.forEach((doc) => {
+    const _serviceName = doc.data().serviceName;
+    const _serviceStatus = doc.data().serviceStatus;
+    const _customerName = doc.data().customerName;
+    const _customerPreferredTime = doc.data().customerPreferredTime;
+
+    data.push({
+      service_name: _serviceName,
+      service_status: _serviceStatus,
+      customer_name: _customerName,
+      customer_preferred_time: _customerPreferredTime,
+    });
+  });
+  return data;
+};
+
+// ================== Admin Panel - Users table ================= //
+const _retrieveUsers = async () => {
+  const data = [];
+  const snapshots = await getDocs(collection(_db, 'users'));
+  snapshots.forEach((doc) => {
+    const _userCreatedAt = doc.data().created_at;
+    const _userID = doc.data().id;
+    const _userLastSignedIn = doc.data().last_signed_in;
+    const _userRole = doc.data().role;
+
+    data.push({
+      created_at: _userCreatedAt,
+      id: _userID,
+      last_signed_in: _userLastSignedIn,
+      role: _userRole,
+    });
+  });
+  return data;
+};
+
+// FirebaseObject
 export const firebaseObject = {
-  /*
-     @app: firebase app
-     @db: firestore database
-     @auth: firebase auth service 
-     */
   // initialize app
   app: _app,
 
@@ -111,8 +149,14 @@ export const firebaseObject = {
   auth: _auth,
 
   //retrieve services by category
-  retrieveSpecificCategory: _retrieveSpecificCategory,
+  retrieveSpecificServiceCategory: _retrieveSpecificServiceCategory,
 
   // delete service
   deleteSpecificService: _deleteSpecificService,
+
+  // retrieve orders
+  retrieveOrders: _retrieveOrders,
+
+  // retrieve users
+  retrieveUsers: _retrieveUsers,
 };

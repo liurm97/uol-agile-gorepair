@@ -21,7 +21,7 @@ export default async function DataTables() {
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: '20px', xl: '20px' }}
       >
-        <ServiceDevelopmentTable tableData={await firebaseObject.retrieveSpecificCategory("Electrical")} />
+        <ServiceDevelopmentTable tableData={await firebaseObject.retrieveSpecificServiceCategory("Electrical")} />
         {/* <ServiceDevelopmentTable tableData={d} /> */}
       </SimpleGrid>
     </Box>
