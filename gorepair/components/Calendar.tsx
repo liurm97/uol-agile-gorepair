@@ -1,18 +1,20 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, forwardRef, useImperativeHandle } from 'react';
 
 import { Calendar } from '@natscale/react-calendar';
 
 import '@natscale/react-calendar/dist/main.css';
+import { Input } from '@chakra-ui/react';
 
-export default function Cal() {
-    const [value, setValue] = useState(new Date());
+const calFunc = (props) => {
   
     const onChange = useCallback(
       (val) => {
-        setValue(val);
+        props.onChangeValue(val);
       },
-      [setValue],
+      [props.onChangeValue],
     );
   
-    return <Calendar value={value} onChange={onChange} />;
+    return <Calendar value={props.value} onChange={onChange}/>;
   }
+
+  export default calFunc
