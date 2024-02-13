@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import {
   Box,
   ButtonGroup,
@@ -43,6 +43,7 @@ import {
 import { useToast } from '@chakra-ui/react'
 import { Span } from 'next/dist/trace'
 import Calendar from '@/components/Calendar'
+import { color } from 'framer-motion'
 
 function decreaseOrder(id) {
   var orderLine = document.getElementById(id);
@@ -73,34 +74,32 @@ function selected(id) {
   }
 }
 
-const Form1 = () => {
-  const [show, setShow] = useState(false)
-  const handleClick = () => setShow(!show)
+const Form1 = (props) => {
   return (
     <>
       <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="5%">
         Choose a Service Category
       </Heading>
       <Flex justifyContent="space-between">
-          <Card w="200px">
+          <Card onClick={() =>{ props.serviceSelect("Electrical"); props.stepChanger(1)}} w="200px">
             <Center>
               <Image src="https://www.svgrepo.com/show/75634/electric-current-symbol.svg" alt="Electrical Icon" boxSize="100px"/>
             </Center>
             <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical</Text></CardHeader>
           </Card>
-          <Card w="200px">
+          <Card onClick={() =>{ props.serviceSelect("Plumbing"); props.stepChanger(1)}} w="200px">
             <Center>
               <Image src="https://www.svgrepo.com/show/283208/plumbering-plumber.svg" alt="Plumbing Icon" boxSize="100px"/>
             </Center>
             <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Plumbing</Text></CardHeader>
           </Card>
-          <Card w="200px">
+          <Card onClick={() =>{ props.serviceSelect("Woodwork"); props.stepChanger(1)}} w="200px">
             <Center>
               <Image src="https://www.svgrepo.com/show/28040/carpentry.svg" alt="Electrical Icon" boxSize="100px"/>
             </Center>
             <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Woodwork</Text></CardHeader>
           </Card>
-          <Card w="200px">
+          <Card onClick={() =>{ props.serviceSelect("Handyman"); props.stepChanger(1)}} w="200px">
             <Center>
               <Image src="https://www.svgrepo.com/show/485927/tools.svg" alt="Electrical Icon" boxSize="100px"/>
             </Center>
@@ -111,12 +110,13 @@ const Form1 = () => {
   )
 }
 
-const Form2 = () => {
+const Form2 = (props) => {
   return (
     <>
       <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="5%">
         Which Services Do You Need?
       </Heading>
+      <Heading>{props.serviceCat}</Heading>
       <Flex justifyContent="space-between">
           <Card w="200px">
             <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 1</Text></CardHeader>
@@ -168,6 +168,9 @@ const Form2 = () => {
 }
 
 const Form3 = () => {
+  const [selected, setSelected] = useState('');
+  const [value, setValue] = useState(new Date());
+  const onChangeValue = (newValue) => setValue(newValue);
   return (
     <>
       <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="5%">
@@ -207,7 +210,7 @@ const Form3 = () => {
           <Card>
             <CardHeader pb="0px"><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Date</Text></CardHeader>
             <CardBody>
-            <Calendar></Calendar>
+            <Calendar value={value} onChangeValue={onChangeValue}/>
             </CardBody>
           </Card>
           <Card w="318px">
@@ -215,36 +218,42 @@ const Form3 = () => {
             <CardBody>
               <Wrap spacing={5} justify="center">
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t9' onClick={()=> selected('t9')}>09:00 AM</Button>
+                  <Button w="100px" colorScheme='gray' id='t9' onClick={()=> setSelected('09:00 AM')}>09:00 AM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t10' onClick={()=> selected('t10')}>10:00 AM</Button>
+                  <Button w="100px" colorScheme='gray' id='t10' onClick={()=> setSelected('10:00 AM')}>10:00 AM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t11' onClick={()=> selected('t11')}>11:00 AM</Button>
+                  <Button w="100px" colorScheme='gray' id='t11' onClick={()=> setSelected('11:00 AM')}>11:00 AM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t12' onClick={()=> selected('t12')}>12:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t12' onClick={()=> setSelected('12:00 PM')}>12:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t1' onClick={()=> selected('t1')}>01:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t1' onClick={()=> setSelected('01:00 PM')}>01:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t2' onClick={()=> selected('t2')}>02:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t2' onClick={()=> setSelected('02:00 PM')}>02:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t3' onClick={()=> selected('t3')}>03:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t3' onClick={()=> setSelected('03:00 PM')}>03:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t4' onClick={()=> selected('t4')}>04:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t4' onClick={()=> setSelected('04:00 PM')}>04:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t5' onClick={()=> selected('t5')}>05:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t5' onClick={()=> setSelected('05:00 PM')}>05:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t6' onClick={() => selected('t6')}>06:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t6' onClick={() => setSelected('06:00 PM')}>06:00 PM</Button>
                 </WrapItem>
               </Wrap>
+            </CardBody>
+          </Card>
+          <Card w="318px">
+            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Selected Date & Time</Text></CardHeader>
+            <CardBody>
+              {value.toDateString()} at {selected}
             </CardBody>
           </Card>
       </Flex>
@@ -321,6 +330,7 @@ export default function Multistep() {
     index: 0,
     count: steps.length,
   })
+  const [serviceCat, setServiceCat] = useState('');
 
   return (
     <>
@@ -346,7 +356,7 @@ export default function Multistep() {
         </Step>
       ))}
     </Stepper>
-        {activeStep === 0 ? <Form1 /> : activeStep === 1 ? <Form2 /> : activeStep === 2 ? <Form3 / > : <Form4 />}
+        {activeStep === 0 ? <Form1 stepChanger = {setActiveStep} serviceSelect = {setServiceCat}/> : activeStep === 1 ? <Form2 serviceCat = {serviceCat}/> : activeStep === 2 ? <Form3 / > : <Form4 />}
         <ButtonGroup mt="5%" w="100%">
           <Flex w="100%" justifyContent="space-between">
             <Flex>
