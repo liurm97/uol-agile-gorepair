@@ -37,13 +37,15 @@ import {
   Center,
   HStack,
   Wrap,
-  WrapItem
+  WrapItem,
+  Grid
 } from '@chakra-ui/react'
 
 import { useToast } from '@chakra-ui/react'
 import { Span } from 'next/dist/trace'
 import Calendar from '@/components/Calendar'
 import { color } from 'framer-motion'
+import { SubcategoryCard } from './SubcategoryCard'
 
 function decreaseOrder(id) {
   var orderLine = document.getElementById(id);
@@ -99,7 +101,7 @@ const Form1 = (props) => {
             </Center>
             <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Woodwork</Text></CardHeader>
           </Card>
-          <Card onClick={() =>{ props.serviceSelect("Handyman"); props.stepChanger(1)}} w="200px">
+          <Card onClick={() =>{ props.serviceSelect("Handy-man/woman/person"); props.stepChanger(1)}} w="200px">
             <Center>
               <Image src="https://www.svgrepo.com/show/485927/tools.svg" alt="Electrical Icon" boxSize="100px"/>
             </Center>
@@ -116,9 +118,11 @@ const Form2 = (props) => {
       <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="5%">
         Which Services Do You Need?
       </Heading>
-      <Heading>{props.serviceCat}</Heading>
-      <Flex justifyContent="space-between">
-          <Card w="200px">
+      <Heading mb={5}>{props.serviceCat}</Heading>
+      {/* <Flex justifyContent="space-between"> */}
+      <Grid templateColumns="repeat(4,1fr)" gap={6}>
+        <SubcategoryCard category={props.serviceCat}/>
+          {/* <Card w="200px">
             <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 1</Text></CardHeader>
             <CardBody>
               <HStack>
@@ -128,8 +132,8 @@ const Form2 = (props) => {
                 <Button size='xs' onClick={()=> increaseOrder("test1")}> + </Button>
               </HStack>
             </CardBody>
-          </Card>
-          <Card w="200px">
+          </Card> */}
+          {/* <Card w="200px">
             <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 2</Text></CardHeader>
             <CardBody>
               <HStack>
@@ -161,8 +165,8 @@ const Form2 = (props) => {
                 <Button size='xs' onClick={()=> increaseOrder("test4")}> + </Button>
               </HStack>
             </CardBody>
-          </Card>
-      </Flex>
+          </Card> */}
+      </Grid>
     </>
   )
 }
