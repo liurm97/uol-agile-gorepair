@@ -176,11 +176,11 @@ const _retrieveUsers = async () => {
  * @param {string} _category
  */
 type UniqueSubCategoryMap = {
-  subcategory: string;
+  [subcategory: string]: number;
 }
 const _retrieveSpecificBookingSubcategories = async (_category: string) => {
   const subcategories: string[] = [];
-  const uniqueSubCategoryMap = {};
+  const uniqueSubCategoryMap: UniqueSubCategoryMap = {};
 
   // filter data in the `services` collection by category
   const q = query(
