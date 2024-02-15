@@ -14,6 +14,7 @@ import { Button } from '@chakra-ui/react';
 import Menu from 'components/menu/MainMenu';
 import * as React from 'react';
 import { firebaseObject } from '../../../../../config/firebaseConfig';
+
 // Assets
 
 type RowObj = {

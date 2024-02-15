@@ -90,25 +90,25 @@ export default function ComplexTable(props: { tableData: any }) {
 				</Flex>
 			)
 		}),
-		columnHelper.accessor('customer_name', {
-			id: 'customer_name',
-			header: () => (
-				<Text
-					justifyContent='space-between'
-					align='center'
-					fontSize={{ sm: '10px', lg: '12px' }}
-					color='gray.400'>
-					Customer Name
-				</Text>
-			),
-			cell: (info: any) => (
-				<Flex align='center'>
-					<Text color={textColor} fontSize='sm' fontWeight='700'>
-						{info.getValue()}
-					</Text>
-				</Flex>
-			)
-		}),
+		// columnHelper.accessor('customer_name', {
+		// 	id: 'customer_name',
+		// 	header: () => (
+		// 		<Text
+		// 			justifyContent='space-between'
+		// 			align='center'
+		// 			fontSize={{ sm: '10px', lg: '12px' }}
+		// 			color='gray.400'>
+		// 			Customer Name
+		// 		</Text>
+		// 	),
+		// 	cell: (info: any) => (
+		// 		<Flex align='center'>
+		// 			<Text color={textColor} fontSize='sm' fontWeight='700'>
+		// 				{info.getValue()}
+		// 			</Text>
+		// 		</Flex>
+		// 	)
+		// }),
 	];
 	const [ data, setData ] = React.useState(() => [ ...defaultData ]);
 	const table = useReactTable({
