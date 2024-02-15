@@ -3,16 +3,13 @@ import { useState, useEffect } from "react";
 import {firebaseObject} from "../app/config/firebaseConfig"
 import { ServiceCard } from "./ServiceCard";
 
-export const SubcategoryCard = ({category}) =>
+export const SubcategoryCard = ({category, selectedServices, setSelectedServices}) =>
 {
-  // console.log("category", category)
   const [subcategory, setSubcategory] = useState([])
 
   useEffect(() =>
   {
-    console.log("render");
       firebaseObject.retrieveSpecificBookingSubcategories(category).then(result =>{
-        console.log("result", result)
         setSubcategory([...result])
       })
   }, [])
@@ -21,19 +18,12 @@ export const SubcategoryCard = ({category}) =>
       {subcategory.map((item) =>
     <GridItem w='100%' h='auto' key={crypto.randomUUID()}>
     <Card w="200px">
-    <CardHeader>
-      {/* <Text key={ind} fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>{item}</Text> */}
+      <CardHeader>
       <Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>{item}</Text>
       </CardHeader>
-    <CardBody>
-      <ServiceCard key={crypto.randomUUID()} category={category} subcategory={item}/>
-      {/* <HStack>
-        <Text as="span" mr="10px">Service 1</Text>
-        <Button size='xs' onClick={()=> decreaseOrder("test1")}> - </Button>
-        <Text as="span" id="test1">0</Text>
-        <Button size='xs' onClick={()=> increaseOrder("test1")}> + </Button>
-      </HStack> */}
-    </CardBody>
+      <CardBody>
+        <ServiceCard key={crypto.randomUUID()} category={category} subcategory={item} selectedServices={selectedServices} setSelectedServices={setSelectedServices}/>
+      </CardBody>
     </Card>
     </GridItem>
 )}
