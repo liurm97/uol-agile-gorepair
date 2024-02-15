@@ -246,7 +246,7 @@ type DataObject = {
 }
 const _createServiceRecord = async (dataObject: DataObject) => {
   try {
-    const docRef = await addDoc(collection(_db, "services"), dataObject);
+    const docRef = await addDoc(collection(_db, "orders"), dataObject);
     console.log("Created successfully");
   } catch (e) {
     console.error(e);
