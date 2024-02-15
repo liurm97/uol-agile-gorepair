@@ -46,6 +46,7 @@ import { Span } from 'next/dist/trace'
 import Calendar from '@/components/Calendar'
 import { color } from 'framer-motion'
 import { SubcategoryCard } from './SubcategoryCard'
+import { firebaseObject } from '@/app/config/firebaseConfig'
 
 function decreaseOrder(id) {
   var orderLine = document.getElementById(id);
@@ -119,62 +120,14 @@ const Form2 = (props) => {
         Which Services Do You Need?
       </Heading>
       <Heading mb={5}>{props.serviceCat}</Heading>
-      {/* <Flex justifyContent="space-between"> */}
       <Grid templateColumns="repeat(4,1fr)" gap={6}>
-        <SubcategoryCard category={props.serviceCat}/>
-          {/* <Card w="200px">
-            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 1</Text></CardHeader>
-            <CardBody>
-              <HStack>
-                <Text as="span" mr="10px">Service 1</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test1")}> - </Button>
-                <Text as="span" id="test1">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test1")}> + </Button>
-              </HStack>
-            </CardBody>
-          </Card> */}
-          {/* <Card w="200px">
-            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 2</Text></CardHeader>
-            <CardBody>
-              <HStack>
-                <Text as="span" mr="10px">Service 1</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test2")}> - </Button>
-                <Text as="span" id="test2">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test2")}> + </Button>
-              </HStack>
-            </CardBody>
-          </Card>
-          <Card w="200px">
-            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 3</Text></CardHeader>
-            <CardBody>
-              <HStack>
-                <Text as="span" mr="10px">Service 1</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test3")}> - </Button>
-                <Text as="span" id="test3">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test3")}> + </Button>
-              </HStack>
-            </CardBody>
-          </Card>
-          <Card w="200px">
-            <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 4</Text></CardHeader>
-            <CardBody>
-              <HStack>
-                <Text as="span" mr="10px">Service 1</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test4")}> - </Button>
-                <Text as="span" id="test4">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test4")}> + </Button>
-              </HStack>
-            </CardBody>
-          </Card> */}
+        <SubcategoryCard category={props.serviceCat} selectedServices={props.selectedServices} setSelectedServices={props.setSelectedServices}/>
       </Grid>
     </>
   )
 }
 
-const Form3 = () => {
-  const [selected, setSelected] = useState('');
-  const [value, setValue] = useState(new Date());
-  const onChangeValue = (newValue) => setValue(newValue);
+const Form3 = (props) => { //selectedServices, selectedTime, props.setSelectedTime, selectedDate, setSelectedDate, onChangeValue
   return (
     <>
       <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="5%">
@@ -184,37 +137,23 @@ const Form3 = () => {
           <Card w="200px">
             <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Summary</Text></CardHeader>
             <CardBody>
-              <HStack mb="10px">
-                <Text as="span" mr="10px">Service 1</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test1")}> - </Button>
-                <Text as="span" id="test1">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test1")}> + </Button>
-              </HStack>
-              <HStack mb="10px">
-                <Text as="span" mr="10px">Service 2</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test3")}> - </Button>
-                <Text as="span" id="test3">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test3")}> + </Button>
-              </HStack>
-              <HStack mb="10px">
-                <Text as="span" mr="10px">Service 3</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test3")}> - </Button>
-                <Text as="span" id="test3">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test3")}> + </Button>
-              </HStack>
-              <HStack mb="10px">
-                <Text as="span" mr="10px">Service 4</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test4")}> - </Button>
-                <Text as="span" id="test4">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test4")}> + </Button>
-              </HStack>
+              <Text fontWeight={'bold'}>Service, Qty</Text>
+            </CardBody>
+            <CardBody>
+            {
+            Object.keys(props.selectedServices).map((oneKey,i)=>{
+            return (
+                <Text>{oneKey}, {props.selectedServices[oneKey]}</Text>
+              )
+            })
+            }
             </CardBody>
           </Card>
 
           <Card>
             <CardHeader pb="0px"><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Date</Text></CardHeader>
             <CardBody>
-            <Calendar value={value} onChangeValue={onChangeValue}/>
+            <Calendar value={props.selectedDate} onChangeValue={props.onChangeValue}/>
             </CardBody>
           </Card>
           <Card w="318px">
@@ -222,34 +161,34 @@ const Form3 = () => {
             <CardBody>
               <Wrap spacing={5} justify="center">
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t9' onClick={()=> setSelected('09:00 AM')}>09:00 AM</Button>
+                  <Button w="100px" colorScheme='gray' id='t9' onClick={()=> props.setSelectedTime('09:00 AM')}>09:00 AM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t10' onClick={()=> setSelected('10:00 AM')}>10:00 AM</Button>
+                  <Button w="100px" colorScheme='gray' id='t10' onClick={()=> props.setSelectedTime('10:00 AM')}>10:00 AM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t11' onClick={()=> setSelected('11:00 AM')}>11:00 AM</Button>
+                  <Button w="100px" colorScheme='gray' id='t11' onClick={()=> props.setSelectedTime('11:00 AM')}>11:00 AM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t12' onClick={()=> setSelected('12:00 PM')}>12:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t12' onClick={()=> props.setSelectedTime('12:00 PM')}>12:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t1' onClick={()=> setSelected('01:00 PM')}>01:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t1' onClick={()=> props.setSelectedTime('01:00 PM')}>01:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t2' onClick={()=> setSelected('02:00 PM')}>02:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t2' onClick={()=> props.setSelectedTime('02:00 PM')}>02:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t3' onClick={()=> setSelected('03:00 PM')}>03:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t3' onClick={()=> props.setSelectedTime('03:00 PM')}>03:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t4' onClick={()=> setSelected('04:00 PM')}>04:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t4' onClick={()=> props.setSelectedTime('04:00 PM')}>04:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t5' onClick={()=> setSelected('05:00 PM')}>05:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t5' onClick={()=> props.setSelectedTime('05:00 PM')}>05:00 PM</Button>
                 </WrapItem>
                 <WrapItem>
-                  <Button w="100px" colorScheme='gray' id='t6' onClick={() => setSelected('06:00 PM')}>06:00 PM</Button>
+                  <Button w="100px" colorScheme='gray' id='t6' onClick={() => props.setSelectedTime('06:00 PM')}>06:00 PM</Button>
                 </WrapItem>
               </Wrap>
             </CardBody>
@@ -257,7 +196,7 @@ const Form3 = () => {
           <Card w="318px">
             <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Selected Date & Time</Text></CardHeader>
             <CardBody>
-              {value.toDateString()} at {selected}
+              {props.selectedDate.toDateString()} at {props.selectedTime}
             </CardBody>
           </Card>
       </Flex>
@@ -265,7 +204,7 @@ const Form3 = () => {
   )
 }
 
-const Form4 = () => {
+const Form4 = (props) => {
   return (
     <>
         <Heading w="100%" textAlign={'center'} fontWeight="bold" mt="2%" mb="5%">
@@ -275,39 +214,25 @@ const Form4 = () => {
           <Card w="200px">
             <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Summary</Text></CardHeader>
             <CardBody>
-              <HStack mb="10px">
-                <Text as="span" mr="10px">Service 1</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test1")}> - </Button>
-                <Text as="span" id="test1">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test1")}> + </Button>
-              </HStack>
-              <HStack mb="10px">
-                <Text as="span" mr="10px">Service 2</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test3")}> - </Button>
-                <Text as="span" id="test3">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test3")}> + </Button>
-              </HStack>
-              <HStack mb="10px">
-                <Text as="span" mr="10px">Service 3</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test3")}> - </Button>
-                <Text as="span" id="test3">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test3")}> + </Button>
-              </HStack>
-              <HStack mb="10px">
-                <Text as="span" mr="10px">Service 4</Text>
-                <Button size='xs' onClick={()=> decreaseOrder("test4")}> - </Button>
-                <Text as="span" id="test4">0</Text>
-                <Button size='xs' onClick={()=> increaseOrder("test4")}> + </Button>
-              </HStack>
+              <Text fontWeight={'bold'}>Service, Qty</Text>
+            </CardBody>
+            <CardBody>
+            {
+            Object.keys(props.selectedServices).map((oneKey,i)=>{
+            return (
+                <Text>{oneKey}, {props.selectedServices[oneKey]}</Text>
+              )
+            })
+            }
             </CardBody>
           </Card>
 
           <Card>
             <CardHeader pb="0px"><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Date & Time</Text></CardHeader>
             <CardBody>
-              <Text fontSize={'xl'} textAlign={'center'}>05th February, 2024</Text> 
+              <Text fontSize={'xl'} textAlign={'center'}>{props.selectedDate.toDateString()}</Text> 
               <Text fontSize={'lg'} textAlign={'center'}>at</Text>
-              <Text fontSize={'xl'} textAlign={'center'}>06:00 PM</Text>
+              <Text fontSize={'xl'} textAlign={'center'}>{props.selectedTime}</Text>
             </CardBody>
           </Card>
           <Card w="318px">
@@ -335,6 +260,16 @@ export default function Multistep() {
     count: steps.length,
   })
   const [serviceCat, setServiceCat] = useState('');
+  const [selectedServices, setSelectedServices] = useState({})
+  const updateSelectedServices = (selectedServicesCopy, name, qty) => {
+    selectedServicesCopy[name] = qty
+    if (qty == 0)
+      delete selectedServicesCopy[name]
+    console.log(selectedServices)
+  }
+  const [selectedTime, setSelectedTime] = useState(''); //selected time
+  const [selectedDate, setSelectedDate] = useState(new Date()); //calendar value
+  const onChangeValue = (newValue) => setSelectedDate(newValue); //callback function for calendar (child)
 
   return (
     <>
@@ -360,7 +295,7 @@ export default function Multistep() {
         </Step>
       ))}
     </Stepper>
-        {activeStep === 0 ? <Form1 stepChanger = {setActiveStep} serviceSelect = {setServiceCat}/> : activeStep === 1 ? <Form2 serviceCat = {serviceCat}/> : activeStep === 2 ? <Form3 / > : <Form4 />}
+        {activeStep === 0 ? <Form1 stepChanger = {setActiveStep} serviceSelect = {setServiceCat}/> : activeStep === 1 ? <Form2 serviceCat = {serviceCat} selectedServices={selectedServices} setSelectedServices={updateSelectedServices}/> : activeStep === 2 ? <Form3 selectedServices={selectedServices} selectedTime={selectedTime} setSelectedTime={setSelectedTime} selectedDate={selectedDate} setSelectedDate={setSelectedDate} onChangeValue={onChangeValue}/ > : <Form4 selectedServices={selectedServices} selectedTime={selectedTime} selectedDate={selectedDate}/>}
         <ButtonGroup mt="5%" w="100%">
           <Flex w="100%" justifyContent="space-between">
             <Flex>
@@ -380,7 +315,13 @@ export default function Multistep() {
                 w="7rem"
                 colorScheme="red"
                 variant="solid"
-                onClick={() => {
+                onClick={async () => {
+                  var requestData = {
+                    customerPreferredTime: selectedDate+' at '+selectedTime,
+                    servicesRequested: selectedServices,
+                    serviceStatus: 'Pending'
+                  }
+                  firebaseObject.createServiceRecord(requestData);
                   toast({
                     title: 'Request Submitted.',
                     description: "We've submitted your request. You will be connected with a technician shortly.",
