@@ -241,7 +241,7 @@ const _retrieveSpecificBookingServices = async (_category: string, _subcategory:
 
 type DataObject = {
   customerPreferredTime: string;
-  servicesRequested: object;
+  serviceName: object;
   serviceStatus: string
 }
 const _createServiceRecord = async (dataObject: DataObject) => {
