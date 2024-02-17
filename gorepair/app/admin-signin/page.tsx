@@ -24,7 +24,7 @@ export default function SignInPage() {
       bg={useColorModeValue('gray.50', 'gray.800')}>
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         <Stack align="center">
-          <Heading fontSize="4xl">Sign in to your account</Heading>
+          <Heading fontSize="4xl">Admin Sign in</Heading>
           <Text fontSize="lg" color="gray.600">
             to enjoy all of our cool <Link color="blue.400" href="#">features</Link> ✌️
           </Text>
@@ -59,9 +59,6 @@ export default function SignInPage() {
                 }}>
                 Sign in
               </Button>
-              <Text align="center">
-                New to the site? <Link color="blue.400" href="/signup">Sign Up</Link>
-              </Text>
             </Stack>
           </Stack>
         </Box>
