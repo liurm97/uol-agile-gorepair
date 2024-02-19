@@ -13,16 +13,10 @@ import {
   createIcon,
 } from '@chakra-ui/react'
 
-import {Forms} from "./Forms"
-
-import {CreateServiceForm} from "./CreateServiceForm"
-
 export default function CallToActionWithAnnotation() {
   return (
     <>
       <Container maxW={'3xl'}>
-        {/* <Forms /> */}
-        {/* <CreateServiceForm/> */}
         <Stack
           as={Box}
           textAlign={'center'}
