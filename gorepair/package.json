@@ -16,7 +16,10 @@
     "@emotion/styled": "^11.11.0",
     "@natscale/react-calendar": "^0.0.0-beta.26",
     "firebase": "^10.8.0",
+<<<<<<< HEAD
     "firebase-cli": "^1.2.0",
+=======
+>>>>>>> 88c63fe (connected step 2 of booking flow to firebase)
     "framer-motion": "^10.17.12",
     "next": "14.0.4",
     "react": "^18",
