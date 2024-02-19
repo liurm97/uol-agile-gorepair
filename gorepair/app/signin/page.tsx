@@ -41,6 +41,7 @@ export default function SignInPage() {
   return (
     <Flex
 <<<<<<< HEAD
+<<<<<<< HEAD
       minH={'100vh'}
       align={'flex-start'}
       justify={'center'}
@@ -49,6 +50,16 @@ export default function SignInPage() {
       align="center"
       justify="center"
 >>>>>>> 126c133 (Frontend Updates)
+=======
+      minH="100vh"
+      align="center"
+      justify="center"
+=======
+      minH={'100vh'}
+      align={'flex-start'}
+      justify={'center'}
+>>>>>>> 7c93579 (added sign up and sign in functionality to both pages)
+>>>>>>> 6ecdb45 (rebasing)
       bg={useColorModeValue('gray.50', 'gray.800')}>
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         <Stack align="center">
@@ -81,6 +92,7 @@ export default function SignInPage() {
               </Stack>
               <Button
 <<<<<<< HEAD
+<<<<<<< HEAD
                 bg={'blue.400'}
                 // as={'a'}
                 // href={'/'}
@@ -89,6 +101,16 @@ export default function SignInPage() {
                 bg="blue.400"
                 color="white"
 >>>>>>> 126c133 (Frontend Updates)
+=======
+                bg="blue.400"
+                color="white"
+=======
+                bg={'blue.400'}
+                // as={'a'}
+                // href={'/'}
+                color={'white'}
+>>>>>>> 7c93579 (added sign up and sign in functionality to both pages)
+>>>>>>> 6ecdb45 (rebasing)
                 _hover={{
                   bg: 'blue.500',
                 }}

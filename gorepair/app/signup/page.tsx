@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import {firebaseConfig} from "../../config/firebase"
+import { firebaseConfig } from "../../config/firebase";
 import {
   Flex,
   Box,
@@ -16,9 +16,9 @@ import {
   Text,
   useColorModeValue,
   Link,
-} from '@chakra-ui/react';
-import { useState } from 'react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +28,8 @@ export default function SignUpPage() {
       minH="100vh"
       align="center"
       justify="center"
-      bg={useColorModeValue('gray.50', 'gray.800')}>
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         <Stack align="center">
           <Heading fontSize="4xl" textAlign="center">
@@ -40,10 +41,10 @@ export default function SignUpPage() {
         </Stack>
         <Box
           rounded="lg"
-          bg={useColorModeValue('white', 'gray.700')}
+          bg={useColorModeValue("white", "gray.700")}
           boxShadow="lg"
           p={8}>
-          <Stack spacing={6}>
+          <Stack spacing={4}>
             <HStack>
               {/* <Box> */}
                 {/* <FormControl id="firstName" isRequired>
@@ -60,18 +61,22 @@ export default function SignUpPage() {
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" onChange={e => {
-                console.log("email: ", e.target.value);
-              }}/>
+              <Input
+                type="email"
+                onChange={(e) => {
+                  console.log("email: ", e.target.value);
+                }}
+              />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
+                <Input type={showPassword ? "text" : "password"} />
                 <InputRightElement h="full">
                   <Button
                     variant="ghost"
-                    onClick={() => setShowPassword(!showPassword)}>
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
                     {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
@@ -83,14 +88,18 @@ export default function SignUpPage() {
                 bg="blue.400"
                 color="white"
                 _hover={{
-                  bg: 'blue.500',
-                }}>
+                  bg: "blue.500",
+                }}
+              >
                 Sign up
               </Button>
             </Stack>
             <Stack pt={6}>
               <Text align="center">
-                Already a user? <Link href="/signin" color="blue.400">Login</Link>
+                Already a user?{" "}
+                <Link href="/signin" color="blue.400">
+                  Login
+                </Link>
               </Text>
             </Stack>
           </Stack>
