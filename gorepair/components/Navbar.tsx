@@ -15,6 +15,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Link,
 } from '@chakra-ui/react'
 import {
   HamburgerIcon,
@@ -55,7 +56,9 @@ export default function WithSubnavigation() {
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
             
-            <Button as={"a"} href ="/">Logo</Button>
+            <Button as={"a"} href ="/" style={{ width: '50px', height: '50px' }}>
+              <img src='/GoRepairLogo.png' alt='GoRepair Logo Icon' style={{ margin: '0' }}/>
+            </Button>
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -84,6 +87,9 @@ export default function WithSubnavigation() {
             }}>
             Sign Up
           </Button>
+          <Link href='/contractor-form' style={{ minWidth: '170px', marginRight: 'auto', justifySelf: 'center', alignSelf: 'center' }}>
+            Become a Contractor
+          </Link>
         </Stack>
       </Flex>
 
@@ -100,7 +106,7 @@ const DesktopNav = () => {
   const popoverContentBgColor = useColorModeValue('white', 'gray.800')
 
   return (
-    <Stack direction={'row'} spacing={4}>
+    <Stack direction={'row'} spacing={4} opacity={0}>
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={'hover'} placement={'bottom-start'}>

@@ -15,35 +15,35 @@ import {
 const testimonials = [
   {
     name: 'Brandon P.',
-    role: 'Chief Marketing Officer',
+    role: 'Homeowner',
     content:
-      'It really saves me time and effort. It is exactly what our business has been lacking. EEZY is the most valuable business resource we have EVER purchased. After using EEZY my business skyrocketed!',
+      'GoRepair made home maintenance so simple and worry-free. I’m impressed with the professionalism and the quality of work. It’s clear they value their customers’ time and satisfaction.',
     avatar:
-      'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+      'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
   },
   {
     name: 'Krysta B.',
-    role: 'Entrepreneur',
+    role: 'Property Manager',
     content:
-      "I didn't even need training. We've used EEZY for the last five years. I have gotten at least 50 times the value from EEZY. I made back the purchase price in just 48 hours!",
+      'Managing multiple properties, I need reliable and efficient repair services. GoRepair has consistently provided that and more. Their team’s expertise and quick response times are unmatched.',
     avatar:
-      'https://images.unsplash.com/photo-1598550874175-4d0ef436c909?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+      'https://images.unsplash.com/photo-1598550874175-4d0ef436c909?ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
   },
   {
     name: 'Darcy L.',
-    role: 'Movie star',
+    role: 'Real Estate Agent',
     content:
-      "Thank you for making it painless, pleasant and most of all, hassle free! I'm good to go. No matter where you go, EEZY is the coolest, most happening thing around! I love EEZY!",
+      'I recommend GoRepair to all my clients. Their service is top-notch, ensuring homes are in perfect condition, whether for living or selling. Truly a game-changer in the real estate market!',
     avatar:
       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=334&q=80',
   },
   {
     name: 'Daniel T.',
-    role: 'Musician',
+    role: 'DIY Enthusiast',
     content:
-      'I am so pleased with this product. EEZY is both attractive and highly adaptable. Without EEZY, we would have gone bankrupt by now. Thank you for creating this product!',
+      'Whenever a home repair is beyond my DIY skills, I turn to GoRepair. Their expertise and friendly service have saved my projects more than once. Highly recommended for any home repair needs!',
     avatar:
-      'https://images.unsplash.com/photo-1606513542745-97629752a13b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+      'https://images.unsplash.com/photo-1606513542745-97629752a13b?ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
   },
 ]
 

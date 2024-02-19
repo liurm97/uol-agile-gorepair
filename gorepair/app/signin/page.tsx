@@ -13,6 +13,7 @@ import {
   Button,
   Heading,
   Text,
+  Link,
   useColorModeValue,
 } from '@chakra-ui/react'
 
@@ -39,21 +40,27 @@ export default function SignInPage() {
 
   return (
     <Flex
+<<<<<<< HEAD
       minH={'100vh'}
       align={'flex-start'}
       justify={'center'}
+=======
+      minH="100vh"
+      align="center"
+      justify="center"
+>>>>>>> 126c133 (Frontend Updates)
       bg={useColorModeValue('gray.50', 'gray.800')}>
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-        <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool <Text color={'blue.400'}>features</Text> ✌️
+      <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
+        <Stack align="center">
+          <Heading fontSize="4xl">Sign in to your account</Heading>
+          <Text fontSize="lg" color="gray.600">
+            to enjoy all of our cool <Link color="blue.400" href="#">features</Link> ✌️
           </Text>
         </Stack>
         <Box
-          rounded={'lg'}
+          rounded="lg"
           bg={useColorModeValue('white', 'gray.700')}
-          boxShadow={'lg'}
+          boxShadow="lg"
           p={8}>
           <Stack spacing={4}>
             <FormControl id="email">
@@ -67,16 +74,21 @@ export default function SignInPage() {
             <Stack spacing={10}>
               <Stack
                 direction={{ base: 'column', sm: 'row' }}
-                align={'start'}
-                justify={'space-between'}>
+                align="start"
+                justify="space-between">
                 <Checkbox>Remember me</Checkbox>
-                <Text color={'blue.400'}>Forgot password?</Text>
+                <Link color="blue.400" href="/forgot-password">Forgot password?</Link>
               </Stack>
               <Button
+<<<<<<< HEAD
                 bg={'blue.400'}
                 // as={'a'}
                 // href={'/'}
                 color={'white'}
+=======
+                bg="blue.400"
+                color="white"
+>>>>>>> 126c133 (Frontend Updates)
                 _hover={{
                   bg: 'blue.500',
                 }}
@@ -103,6 +115,9 @@ export default function SignInPage() {
                 >
                 Sign in
               </Button>
+              <Text align="center">
+                New to the site? <Link color="blue.400" href="/signup">Sign Up</Link>
+              </Text>
             </Stack>
           </Stack>
         </Box>
