@@ -14,8 +14,12 @@ import {
   Link,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { firebaseObject } from "../config/firebaseConfig";
 
 export default function SignInPage() {
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   return (
     <Flex
       minH="100vh"
@@ -43,11 +47,22 @@ export default function SignInPage() {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input
+                type="password"
+                onChange={(e) => {
+                  console.log("password", password);
+                  setPassword(e.target.value);
+                }}
+              />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -66,6 +81,12 @@ export default function SignInPage() {
                 _hover={{
                   bg: "blue.500",
                 }}
+                onClick={() =>
+                  firebaseObject.userSignIn({
+                    email: email,
+                    password: password,
+                  })
+                }
               >
                 Sign in
               </Button>

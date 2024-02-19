@@ -18,9 +18,14 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { firebaseObject } from "../config/firebaseConfig";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   return (
     <Flex
@@ -49,24 +54,48 @@ export default function SignUpPage() {
               <Box>
                 <FormControl id="firstName" isRequired>
                   <FormLabel>First Name</FormLabel>
-                  <Input type="text" />
+                  <Input
+                    type="text"
+                    onChange={(e) => {
+                      console.log("first name", e.target.value);
+                      setFirstName(e.target.value);
+                    }}
+                  />
                 </FormControl>
               </Box>
               <Box>
                 <FormControl id="lastName">
                   <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
+                  <Input
+                    type="text"
+                    onChange={(e) => {
+                      console.log("last name", e.target.value);
+                      setLastName(e.target.value);
+                    }}
+                  />
                 </FormControl>
               </Box>
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                onChange={(e) => {
+                  console.log("email", e.target.value);
+                  setEmail(e.target.value);
+                }}
+              />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? "text" : "password"} />
+                <Input
+                  onChange={(e) => {
+                    console.log("password", e.target.value);
+                    setPassword(e.target.value);
+                  }}
+                  type={showPassword ? "text" : "password"}
+                />
                 <InputRightElement h="full">
                   <Button
                     variant="ghost"
@@ -84,6 +113,16 @@ export default function SignUpPage() {
                 color="white"
                 _hover={{
                   bg: "blue.500",
+                }}
+                onClick={() => {
+                  console.log("Sign Up Clicked");
+                  const userInformation = {
+                    email: email,
+                    password: password,
+                    firstName: firstName,
+                    lastName: lastName,
+                  };
+                  firebaseObject.userSignUp(userInformation, "user");
                 }}
               >
                 Sign up

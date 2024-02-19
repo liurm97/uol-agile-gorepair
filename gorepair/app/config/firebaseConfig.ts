@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { FirebaseApp, initializeApp } from "firebase/app";
 import {
   getFirestore,
   collection,
@@ -10,9 +10,15 @@ import {
   doc,
   getDoc,
   addDoc,
+  setDoc,
+  updateDoc,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { Interface } from "readline";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  Auth,
+} from "firebase/auth";
 
 // ======================== Set up ====================== //
 
@@ -44,8 +50,8 @@ const _auth = getAuth(_app);
 type Category = {
   service: string;
   price: string;
-  id: string
-}
+  id: string;
+};
 const _retrieveSpecificServiceCategory = async (_category: string) => {
   const data: Category[] = [];
 
@@ -69,7 +75,10 @@ const _retrieveSpecificServiceCategory = async (_category: string) => {
  * @param {string} _category
  * @param {string} indDocIdToDelete
  */
-const _deleteSpecificService = async (_category: string, indDocIdToDelete: number) => {
+const _deleteSpecificService = async (
+  _category: string,
+  indDocIdToDelete: number
+) => {
   // filter data in the `services` collection by category
   const q = query(
     collection(_db, "services"),
@@ -111,9 +120,9 @@ const _deleteService = async (docID: string) => {
 type Order = {
   service_name: string;
   service_status: string;
-  customer_name: string
-  customer_preferred_time: string
-}
+  customer_name: string;
+  customer_preferred_time: string;
+};
 
 /**
  * Retrieve all records in the `orders` firestore collection
@@ -146,9 +155,9 @@ const _retrieveOrders = async () => {
 type User = {
   created_at: string;
   id: string;
-  last_signed_in: string
-  role: string
-}
+  last_signed_in: string;
+  role: string;
+};
 
 const _retrieveUsers = async () => {
   const data: User[] = [];
@@ -169,6 +178,125 @@ const _retrieveUsers = async () => {
   return data;
 };
 
+// ================== Regular User Sign Up ================= //
+type UserSignUpCredential = {
+  auth?: Auth;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+};
+
+type UserSignUpRecord = {
+  firstName: string;
+  lastName: string;
+  created_at?: string;
+  id: string;
+  last_signed_in?: string;
+  role: string;
+};
+
+const _insertIntoUsersCollection = async (userRecord: UserSignUpRecord) => {
+  try {
+    await setDoc(doc(_db, "users", userRecord.id), userRecord);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const _userSignUp = (
+  userCredential: UserSignUpCredential,
+  userRole: string
+) => {
+  createUserWithEmailAndPassword(
+    _auth,
+    userCredential.email,
+    userCredential.password
+  )
+    .then((createdUser) => {
+      console.log("User created successfully");
+      // Signed up
+      const user = createdUser.user;
+      const userId = user.uid;
+      const userMetadata = user.metadata;
+      const { creationTime, lastSignInTime } = userMetadata;
+      _insertIntoUsersCollection({
+        firstName: userCredential.firstName,
+        lastName: userCredential.lastName,
+        created_at: creationTime,
+        id: userId,
+        last_signed_in: lastSignInTime,
+        role: userRole,
+      })
+        .then(() => {
+          console.log("User inserted successfully");
+        })
+        .catch((err) => console.log("Failed to insert user"));
+      console.log(user);
+
+      // ...
+    })
+    .catch((error) => {
+      console.log("Failed to create user");
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+};
+// ================== Regular User Sign In ================= //
+type UserSignInCredential = {
+  auth?: Auth;
+  email: string;
+  password: string;
+};
+
+const _updateUsersCollectionAfterSignIn = async (
+  userId: string,
+  lastSignedInTime?: string
+) => {
+  try {
+    await updateDoc(doc(_db, "users", userId), {
+      last_signed_in: lastSignedInTime,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const _userSignIn = async (userCredential: UserSignInCredential) => {
+  const auth = getAuth();
+  signInWithEmailAndPassword(
+    _auth,
+    userCredential.email,
+    userCredential.password
+  )
+    .then((signedInUser) => {
+      // Signed in
+      console.log(userCredential.email, " sign in successfully");
+      const user = signedInUser.user;
+      const userId = user.uid;
+      const lastSignedInTime = user.metadata.lastSignInTime;
+      _updateUsersCollectionAfterSignIn(userId, lastSignedInTime)
+        .then(() => {
+          console.log(
+            userCredential.email,
+            " last signed in updated successfully"
+          );
+        })
+        .catch((err) => {
+          console.log(userCredential.email, " last signed in failed to update");
+        });
+      // ...
+    })
+    .catch((error) => {
+      console.log(userCredential.email, " Failed to sign in");
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+};
+
+// ================== Become a Contractor Sign Up ================= //
+
 // ================== Booking Flow - Step 2 ================= //
 
 /**
@@ -177,7 +305,7 @@ const _retrieveUsers = async () => {
  */
 type UniqueSubCategoryMap = {
   [subcategory: string]: number;
-}
+};
 const _retrieveSpecificBookingSubcategories = async (_category: string) => {
   const subcategories: string[] = [];
   const uniqueSubCategoryMap: UniqueSubCategoryMap = {};
@@ -213,8 +341,11 @@ const _retrieveSpecificBookingSubcategories = async (_category: string) => {
 
 type Service = {
   service: string;
-}
-const _retrieveSpecificBookingServices = async (_category: string, _subcategory: string) => {
+};
+const _retrieveSpecificBookingServices = async (
+  _category: string,
+  _subcategory: string
+) => {
   const services: Service[] = [];
 
   // filter data in the `services` collection by category
@@ -242,8 +373,8 @@ const _retrieveSpecificBookingServices = async (_category: string, _subcategory:
 type DataObject = {
   customerPreferredTime: string;
   serviceName: object;
-  serviceStatus: string
-}
+  serviceStatus: string;
+};
 const _createServiceRecord = async (dataObject: DataObject) => {
   try {
     const docRef = await addDoc(collection(_db, "orders"), dataObject);
@@ -284,4 +415,10 @@ export const firebaseObject = {
 
   // create service record
   createServiceRecord: _createServiceRecord,
+
+  // user sign up
+  userSignUp: _userSignUp,
+
+  // user sign in
+  userSignIn: _userSignIn,
 };
