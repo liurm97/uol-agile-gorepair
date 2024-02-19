@@ -1,6 +1,5 @@
 "use client";
 
-import { firebaseConfig } from "../../config/firebase";
 import {
   Flex,
   Box,
@@ -43,30 +42,26 @@ export default function SignUpPage() {
           rounded="lg"
           bg={useColorModeValue("white", "gray.700")}
           boxShadow="lg"
-          p={8}>
+          p={8}
+        >
           <Stack spacing={4}>
             <HStack>
-              {/* <Box> */}
-                {/* <FormControl id="firstName" isRequired>
+              <Box>
+                <FormControl id="firstName" isRequired>
                   <FormLabel>First Name</FormLabel>
-                  <Input type="text" onChange={e => console.log(e.target.value)}/>
-                </FormControl> */}
-              {/* </Box> */}
-              {/* <Box>
+                  <Input type="text" />
+                </FormControl>
+              </Box>
+              <Box>
                 <FormControl id="lastName">
                   <FormLabel>Last Name</FormLabel>
                   <Input type="text" />
                 </FormControl>
-              </Box> */}
+              </Box>
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input
-                type="email"
-                onChange={(e) => {
-                  console.log("email: ", e.target.value);
-                }}
-              />
+              <Input type="email" />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>

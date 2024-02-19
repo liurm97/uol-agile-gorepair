@@ -15,42 +15,14 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@natscale/react-calendar": "^0.0.0-beta.26",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "firebase": "^10.8.0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "firebase-cli": "^1.2.0",
-=======
-<<<<<<< HEAD
->>>>>>> 88c63fe (connected step 2 of booking flow to firebase)
-=======
-    "firebase-cli": "^1.2.0",
->>>>>>> 743cd95 (rebasing)
-=======
->>>>>>> 147ce07 (resolving merge conflict again)
-<<<<<<< HEAD
->>>>>>> 08748df (rebasing)
-=======
-=======
     "firebase": "^10.8.0",
     "firebase-cli": "^1.2.0",
->>>>>>> 1b61620 (delete unnecessary files)
->>>>>>> 0a1848a (rebasing)
     "framer-motion": "^10.17.12",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-<<<<<<< HEAD
-<<<<<<< HEAD
     "react-hook-form": "^7.50.1",
     "react-icons": "^4.12.0"
-=======
-    "react-icons": "^4.12.0",
->>>>>>> 147ce07 (resolving merge conflict again)
-=======
-    "react-icons": "^4.12.0"
->>>>>>> 1b61620 (delete unnecessary files)
   },
   "devDependencies": {
     "@types/node": "^20",
