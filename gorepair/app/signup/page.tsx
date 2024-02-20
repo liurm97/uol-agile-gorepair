@@ -26,6 +26,7 @@ export default function SignUpPage() {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState(null);
 
   return (
     <Flex
@@ -122,12 +123,25 @@ export default function SignUpPage() {
                     firstName: firstName,
                     lastName: lastName,
                   };
-                  firebaseObject.userSignUp(userInformation, "user");
+                  firebaseObject
+                    .userSignUp(userInformation, "user")
+                    .then((res) => {
+                      if (res?.isCreated == true) {
+                        console.log("redirecting to bookings");
+                        window.location.href = "/booking";
+                      } else if (res?.isCreated == false) {
+                        setError(res?.error);
+                        console.log("stay put");
+                      }
+                    });
                 }}
               >
                 Sign up
               </Button>
             </Stack>
+            {error ? (
+              <Text color="tomato">{error?.split(":")[1]}</Text>
+            ) : undefined}
             <Stack pt={6}>
               <Text align="center">
                 Already a user?{" "}

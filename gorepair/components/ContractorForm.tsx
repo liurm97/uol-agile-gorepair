@@ -96,7 +96,6 @@ export default function RegistrationForm({
                 colorScheme="blue"
                 isLoading={isSubmitting}
                 type="submit"
-                onClick={() => {}}
               >
                 Register
               </Button>

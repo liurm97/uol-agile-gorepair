@@ -1,4 +1,4 @@
-import { FirebaseApp, initializeApp } from "firebase/app";
+import { FirebaseApp, FirebaseError, initializeApp } from "firebase/app";
 import {
   getFirestore,
   collection,
@@ -199,49 +199,64 @@ type UserSignUpRecord = {
 const _insertIntoUsersCollection = async (userRecord: UserSignUpRecord) => {
   try {
     await setDoc(doc(_db, "users", userRecord.id), userRecord);
+    return "success";
   } catch (err) {
     console.log(err);
   }
 };
 
-const _userSignUp = (
+const _userSignUp = async (
   userCredential: UserSignUpCredential,
   userRole: string
 ) => {
-  createUserWithEmailAndPassword(
-    _auth,
-    userCredential.email,
-    userCredential.password
-  )
-    .then((createdUser) => {
-      console.log("User created successfully");
-      // Signed up
-      const user = createdUser.user;
-      const userId = user.uid;
-      const userMetadata = user.metadata;
-      const { creationTime, lastSignInTime } = userMetadata;
-      _insertIntoUsersCollection({
-        firstName: userCredential.firstName,
-        lastName: userCredential.lastName,
-        created_at: creationTime,
-        id: userId,
-        last_signed_in: lastSignInTime,
-        role: userRole,
-      })
-        .then(() => {
-          console.log("User inserted successfully");
-        })
-        .catch((err) => console.log("Failed to insert user"));
-      console.log(user);
+  try {
+    const createdUser = await createUserWithEmailAndPassword(
+      _auth,
+      userCredential.email,
+      userCredential.password
+    );
+    if (createdUser) {
+      console.log(userCredential.email, "is created successfully");
+      return { isCreated: true };
+    }
+  } catch (err) {
+    console.log(err.code, err.message);
+    return { isCreated: false, error: err.message };
+  }
+  // .then((createdUser) => {
+  //   console.log("User created successfully");
+  //   // Signed up
+  //   const user = createdUser.user;
+  //   const userId = user.uid;
+  //   const userMetadata = user.metadata;
+  //   const { creationTime, lastSignInTime } = userMetadata;
 
-      // ...
-    })
-    .catch((error) => {
-      console.log("Failed to create user");
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
+  // _insertIntoUsersCollection({
+  //   firstName: userCredential.firstName,
+  //   lastName: userCredential.lastName,
+  //   created_at: creationTime,
+  //   id: userId,
+  //   last_signed_in: lastSignInTime,
+  //   role: userRole,
+  // })
+  //   .then((res) => {
+  //     console.log("User inserted successfully");
+  //     return true;
+  //   })
+  //   .catch((err) => {
+  //     console.log("Failed to insert user");
+  //     return false;
+  //   })
+  //   .finally(() => true);
+
+  // ...
+  // }
+  // .catch((error) => {
+  //   console.log("Failed to create user");
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  //   // ..
+  // });
 };
 // ================== Regular User Sign In ================= //
 type UserSignInCredential = {
