@@ -57,6 +57,9 @@ export default function RegistrationForm({
                   {...register("name", {
                     required: "Please enter your full name.",
                   })}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                  }}
                 />
                 <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
               </FormControl>
@@ -70,6 +73,9 @@ export default function RegistrationForm({
                   {...register("email", {
                     required: "Please enter your email.",
                   })}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                  }}
                 />
                 <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
               </FormControl>
@@ -82,6 +88,9 @@ export default function RegistrationForm({
                   {...register("service", {
                     required: "Please select your service.",
                   })}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                  }}
                 >
                   <option value="Electrical">Electrical</option>
                   <option value="Plumbing">Plumbing</option>
@@ -96,6 +105,9 @@ export default function RegistrationForm({
                 colorScheme="blue"
                 isLoading={isSubmitting}
                 type="submit"
+                onSubmit={() => {
+                  console.log("clicked");
+                }}
               >
                 Register
               </Button>

@@ -215,48 +215,35 @@ const _userSignUp = async (
       userCredential.email,
       userCredential.password
     );
-    if (createdUser) {
-      console.log(userCredential.email, "is created successfully");
+    const lastName = userCredential.lastName;
+    const firstName = userCredential.firstName;
+    const created_at = createdUser.user.metadata.creationTime;
+    const userId = createdUser.user.uid;
+    const lastSignedIn = createdUser.user.metadata.lastSignInTime;
+    const role = "user";
+    const insertIntoUsersCollectionResult = await _insertIntoUsersCollection({
+      firstName: firstName,
+      lastName: lastName,
+      created_at: created_at,
+      id: userId,
+      last_signed_in: lastSignedIn,
+      role: role,
+    });
+    console.log(
+      "insertIntoUsersCollectionResult",
+      insertIntoUsersCollectionResult
+    );
+    if (createdUser && insertIntoUsersCollectionResult) {
+      console.log(
+        userCredential.email,
+        "is created and inserted into collection successfully"
+      );
       return { isCreated: true };
     }
   } catch (err) {
     console.log(err.code, err.message);
     return { isCreated: false, error: err.message };
   }
-  // .then((createdUser) => {
-  //   console.log("User created successfully");
-  //   // Signed up
-  //   const user = createdUser.user;
-  //   const userId = user.uid;
-  //   const userMetadata = user.metadata;
-  //   const { creationTime, lastSignInTime } = userMetadata;
-
-  // _insertIntoUsersCollection({
-  //   firstName: userCredential.firstName,
-  //   lastName: userCredential.lastName,
-  //   created_at: creationTime,
-  //   id: userId,
-  //   last_signed_in: lastSignInTime,
-  //   role: userRole,
-  // })
-  //   .then((res) => {
-  //     console.log("User inserted successfully");
-  //     return true;
-  //   })
-  //   .catch((err) => {
-  //     console.log("Failed to insert user");
-  //     return false;
-  //   })
-  //   .finally(() => true);
-
-  // ...
-  // }
-  // .catch((error) => {
-  //   console.log("Failed to create user");
-  //   const errorCode = error.code;
-  //   const errorMessage = error.message;
-  //   // ..
-  // });
 };
 // ================== Regular User Sign In ================= //
 type UserSignInCredential = {
@@ -265,52 +252,70 @@ type UserSignInCredential = {
   password: string;
 };
 
+type UpdateUserRecord = {
+  userId: string;
+  lastSignedInTime?: string;
+};
 const _updateUsersCollectionAfterSignIn = async (
-  userId: string,
-  lastSignedInTime?: string
+  updateUserRecord: UpdateUserRecord
 ) => {
   try {
-    await updateDoc(doc(_db, "users", userId), {
-      last_signed_in: lastSignedInTime,
+    await updateDoc(doc(_db, "users", updateUserRecord.userId), {
+      last_signed_in: updateUserRecord.lastSignedInTime,
     });
+    return "success";
   } catch (err) {
     console.log(err);
+    return "false";
   }
 };
 
 const _userSignIn = async (userCredential: UserSignInCredential) => {
-  const auth = getAuth();
-  signInWithEmailAndPassword(
-    _auth,
-    userCredential.email,
-    userCredential.password
-  )
-    .then((signedInUser) => {
-      // Signed in
-      console.log(userCredential.email, " sign in successfully");
-      const user = signedInUser.user;
-      const userId = user.uid;
-      const lastSignedInTime = user.metadata.lastSignInTime;
-      _updateUsersCollectionAfterSignIn(userId, lastSignedInTime)
-        .then(() => {
-          console.log(
-            userCredential.email,
-            " last signed in updated successfully"
-          );
-        })
-        .catch((err) => {
-          console.log(userCredential.email, " last signed in failed to update");
-        });
-      // ...
-    })
-    .catch((error) => {
-      console.log(userCredential.email, " Failed to sign in");
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+  try {
+    const signedInUser = await signInWithEmailAndPassword(
+      _auth,
+      userCredential.email,
+      userCredential.password
+    );
+    const userId = signedInUser.user.uid;
+    const lastSignedInTime = signedInUser.user.metadata.lastSignInTime;
+    const updateUsersCollectionResult = await _updateUsersCollectionAfterSignIn(
+      {
+        userId: userId,
+        lastSignedInTime: lastSignedInTime,
+      }
+    );
+    if (signedInUser && "success") {
+      return { isSignedIn: true };
+    }
+  } catch (err) {
+    console.log(err.code, err.message);
+    return { isSignedIn: false, error: err.message };
+  }
 };
 
 // ================== Become a Contractor Sign Up ================= //
+type contractorSignUpCredential = {
+  name: string;
+  email: string;
+  service: string;
+};
+
+const _insertIntoContractorPlatformRequestCollection = async (
+  contractorCredential: contractorSignUpCredential
+) => {
+  try {
+    await addDoc(collection(_db, "contractor_platform_requests"), {
+      email: contractorCredential.email,
+      full_name: contractorCredential.name,
+      service: contractorCredential.service,
+    });
+    return "success";
+  } catch (err) {
+    console.log(err);
+    return "fail";
+  }
+};
 
 // ================== Booking Flow - Step 2 ================= //
 
@@ -436,4 +441,8 @@ export const firebaseObject = {
 
   // user sign in
   userSignIn: _userSignIn,
+
+  // submit contractor registration form
+  insertIntoContractorPlatformRequestCollection:
+    _insertIntoContractorPlatformRequestCollection,
 };

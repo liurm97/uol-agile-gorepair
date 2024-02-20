@@ -20,6 +20,8 @@ import { firebaseObject } from "../config/firebaseConfig";
 export default function SignInPage() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   return (
     <Flex
       minH="100vh"
@@ -75,21 +77,40 @@ export default function SignInPage() {
                   Forgot password?
                 </Link>
               </Stack>
-              <Button
-                bg="blue.400"
-                color="white"
-                _hover={{
-                  bg: "blue.500",
-                }}
-                onClick={() =>
-                  firebaseObject.userSignIn({
-                    email: email,
-                    password: password,
-                  })
-                }
-              >
-                Sign in
-              </Button>
+              {loading ? (
+                <Button bg="blue.100" color="white">
+                  Sign in
+                </Button>
+              ) : (
+                <Button
+                  bg="blue.400"
+                  color="white"
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                  onClick={() => {
+                    setLoading(true);
+                    firebaseObject
+                      .userSignIn({
+                        email: email,
+                        password: password,
+                      })
+                      .then((res) => {
+                        if (res?.isSignedIn == true) {
+                          window.location.href = "/booking";
+                        } else if (res?.isSignedIn == false) {
+                          setError(res?.error);
+                          setLoading(false);
+                        }
+                      });
+                  }}
+                >
+                  Sign in
+                </Button>
+              )}
+              {error ? (
+                <Text color="tomato">{error?.split(":")[1]}</Text>
+              ) : undefined}
               <Text align="center">
                 New to the site?{" "}
                 <Link color="blue.400" href="/signup">

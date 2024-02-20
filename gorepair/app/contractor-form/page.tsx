@@ -1,8 +1,9 @@
 "use client";
 
 import { Box, Center, Fade, Heading, Text, VStack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import RegistrationForm from "@/components/ContractorForm";
+import { firebaseObject } from "../config/firebaseConfig";
 
 export default function Form() {
   const [data, setData] = useState<{
@@ -10,6 +11,22 @@ export default function Form() {
     email: string;
     service: string;
   }>();
+
+  const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    if (isInitialMount.current == false) {
+      console.log("submitted");
+      console.log(data);
+      firebaseObject
+        .insertIntoContractorPlatformRequestCollection(data)
+        .then((res) => {
+          if (res == "success") {
+            window.location.href = "/";
+          }
+        });
+    }
+  }, [data]);
 
   // Function to render text with line breaks after each sentence
   const renderTextWithLineBreaks = (text: string) => {
@@ -35,7 +52,12 @@ export default function Form() {
           </VStack>
           <Box height="2rem"></Box>
 
-          <RegistrationForm onRegistered={(formData) => setData(formData)} />
+          <RegistrationForm
+            onRegistered={(formData) => {
+              isInitialMount.current = false;
+              setData(formData);
+            }}
+          />
         </Fade>
         <Fade in={!!data} unmountOnExit>
           <Box maxWidth={"xl"}>
