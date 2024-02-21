@@ -5,7 +5,7 @@ import { Calendar } from '@natscale/react-calendar';
 import '@natscale/react-calendar/dist/main.css';
 import { Input } from '@chakra-ui/react';
 
-const calFunc = (props) => {
+const CalFunc = (props) => {
   
     const onChange = useCallback(
       (val) => {
@@ -17,4 +17,4 @@ const calFunc = (props) => {
     return <Calendar value={props.value} onChange={onChange}/>;
   }
 
-  export default calFunc
+  export default CalFunc

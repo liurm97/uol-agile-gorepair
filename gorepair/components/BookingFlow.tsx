@@ -143,7 +143,7 @@ const Form3 = (props) => { //selectedServices, selectedTime, props.setSelectedTi
             {
             Object.keys(props.selectedServices).map((oneKey,i)=>{
             return (
-                <Text>{oneKey}, {props.selectedServices[oneKey]}</Text>
+                <Text key={oneKey}>{oneKey}, {props.selectedServices[oneKey]}</Text>
               )
             })
             }
@@ -220,7 +220,7 @@ const Form4 = (props) => {
             {
             Object.keys(props.selectedServices).map((oneKey,i)=>{
             return (
-                <Text>{oneKey}, {props.selectedServices[oneKey]}</Text>
+                <Text key={oneKey}>{oneKey}, {props.selectedServices[oneKey]}</Text>
               )
             })
             }
@@ -329,7 +329,8 @@ export default function Multistep() {
                     duration: 5000,
                     isClosable: true,
                   })
-                }}>
+                }}
+                href="/">
                 Submit
               </Button>
             ) : null}
