@@ -392,15 +392,17 @@ const _retrieveSpecificBookingServices = async (
 
 type DataObject = {
   customerPreferredTime: string;
-  serviceName: object;
+  servicesRequested: object;
   serviceStatus: string;
 };
 const _createServiceRecord = async (dataObject: DataObject) => {
   try {
-    const docRef = await addDoc(collection(_db, "orders"), dataObject);
-    console.log("Created successfully");
+    await addDoc(collection(_db, "orders"), dataObject);
+    console.log("Creating service record");
+    return true;
   } catch (e) {
     console.error(e);
+    return false;
   }
 };
 

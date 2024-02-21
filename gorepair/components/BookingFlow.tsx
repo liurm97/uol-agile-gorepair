@@ -205,7 +205,7 @@ const Form3 = (props) => {
           <CardBody>
             {Object.keys(props.selectedServices).map((oneKey, i) => {
               return (
-                <Text>
+                <Text key={oneKey}>
                   {oneKey}, {props.selectedServices[oneKey]}
                 </Text>
               );
@@ -371,7 +371,7 @@ const Form4 = (props) => {
           <CardBody>
             {Object.keys(props.selectedServices).map((oneKey, i) => {
               return (
-                <Text>
+                <Text key={oneKey}>
                   {oneKey}, {props.selectedServices[oneKey]}
                 </Text>
               );
@@ -515,8 +515,7 @@ export default function Multistep() {
                     servicesRequested: selectedServices,
                     serviceStatus: "Pending",
                   };
-                  firebaseObject.createServiceRecord(requestData);
-                  window.location.href = "/";
+                  console.log(requestData);
                   toast({
                     title: "Request Submitted.",
                     description:
@@ -525,6 +524,13 @@ export default function Multistep() {
                     duration: 5000,
                     isClosable: true,
                   });
+
+                  const result = await firebaseObject.createServiceRecord(
+                    requestData
+                  );
+                  if (result == true) {
+                    window.location.href = "/";
+                  }
                 }}
               >
                 Submit
