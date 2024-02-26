@@ -240,8 +240,7 @@ const _userSignUp = async (
       );
       return { isCreated: true };
     }
-  } catch (err) {
-    console.log(err.code, err.message);
+  } catch (err: any) {
     return { isCreated: false, error: err.message };
   }
 };

@@ -26,7 +26,7 @@ export default function SignUpPage() {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
 
   return (
     <Flex
@@ -127,11 +127,9 @@ export default function SignUpPage() {
                     .userSignUp(userInformation, "user")
                     .then((res) => {
                       if (res?.isCreated == true) {
-                        console.log("redirecting to bookings");
                         window.location.href = "/booking";
                       } else if (res?.isCreated == false) {
                         setError(res?.error);
-                        console.log("stay put");
                       }
                     });
                 }}
