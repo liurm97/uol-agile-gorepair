@@ -1,34 +1,54 @@
-import { Card, CardHeader, Text, HStack, CardBody, Button, GridItem } from "@chakra-ui/react"
+import {
+  Card,
+  CardHeader,
+  Text,
+  HStack,
+  CardBody,
+  Button,
+  GridItem,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import {firebaseObject} from "../app/config/firebaseConfig"
+import { firebaseObject } from "../config/firebaseConfig";
 import { ServiceCard } from "./ServiceCard";
 
-export const SubcategoryCard = ({category, selectedServices, setSelectedServices}) =>
-{
-  const [subcategory, setSubcategory] = useState([])
+export const SubcategoryCard = ({
+  category,
+  selectedServices,
+  setSelectedServices,
+}) => {
+  const [subcategory, setSubcategory] = useState([]);
 
-  useEffect(() =>
-  {
-      firebaseObject.retrieveSpecificBookingSubcategories(category).then(result =>{
-        setSubcategory([...result])
-      })
-  }, [])
+  useEffect(() => {
+    firebaseObject
+      .retrieveSpecificBookingSubcategories(category)
+      .then((result) => {
+        setSubcategory([...result]);
+      });
+  }, []);
   return (
     <>
-      {subcategory.map((item) =>
-    <GridItem w='100%' h='auto' key={crypto.randomUUID()}>
-    <Card w="200px">
-      <CardHeader>
-      <Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>{item}</Text>
-      </CardHeader>
-      <CardBody>
-        <ServiceCard key={crypto.randomUUID()} category={category} subcategory={item} selectedServices={selectedServices} setSelectedServices={setSelectedServices}/>
-      </CardBody>
-    </Card>
-    </GridItem>
-)}
+      {subcategory.map((item) => (
+        <GridItem w="100%" h="auto" key={crypto.randomUUID()}>
+          <Card w="200px">
+            <CardHeader>
+              <Text fontSize={"2xl"} fontWeight={"bold"} textAlign={"center"}>
+                {item}
+              </Text>
+            </CardHeader>
+            <CardBody>
+              <ServiceCard
+                key={crypto.randomUUID()}
+                category={category}
+                subcategory={item}
+                selectedServices={selectedServices}
+                setSelectedServices={setSelectedServices}
+              />
+            </CardBody>
+          </Card>
+        </GridItem>
+      ))}
 
-    {/* <GridItem w='100%' h='auto'>
+      {/* <GridItem w='100%' h='auto'>
     <Card w="200px">
     <CardHeader><Text fontSize={'2xl'} fontWeight={'bold'} textAlign={'center'}>Electrical 1</Text></CardHeader>
     <CardBody>
@@ -41,11 +61,9 @@ export const SubcategoryCard = ({category, selectedServices, setSelectedServices
     </CardBody>
     </Card>
     </GridItem> */}
-
-    
     </>
-  )
-}
+  );
+};
 
 // {firebaseObject.retrieveSpecificBookingSubcategories(category).then(result =>
 //   {

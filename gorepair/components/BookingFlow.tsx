@@ -46,7 +46,7 @@ import { Span } from "next/dist/trace";
 import Calendar from "@/components/Calendar";
 import { color } from "framer-motion";
 import { SubcategoryCard } from "./SubcategoryCard";
-import { firebaseObject } from "@/app/config/firebaseConfig";
+import { firebaseObject } from "@/config/firebaseConfig";
 
 function decreaseOrder(id) {
   var orderLine = document.getElementById(id);

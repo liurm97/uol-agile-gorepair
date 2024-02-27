@@ -14,7 +14,7 @@ import {
   Heading,
   VStack,
 } from "@chakra-ui/react";
-import { firebaseObject } from "@/app/config/firebaseConfig";
+import { firebaseObject } from "@/config/firebaseConfig";
 
 interface IRegistration {
   name: string;

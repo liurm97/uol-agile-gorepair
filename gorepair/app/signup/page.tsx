@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { firebaseObject } from "../config/firebaseConfig";
+import { firebaseObject } from "../../config/firebaseConfig";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);

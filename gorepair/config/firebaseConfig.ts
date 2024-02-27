@@ -117,29 +117,36 @@ const _deleteService = async (docID: string) => {
 
 // ================== Admin Panel - Orders table ================= //
 
-type Order = {
-  service_name: string;
-  service_status: string;
-  customer_name: string;
-  customer_preferred_time: string;
-};
-
 /**
  * Retrieve all records in the `orders` firestore collection
  */
+
+type Order = {
+  service_name: string;
+  service_status: string;
+  customer_preferred_time: string;
+};
 const _retrieveOrders = async () => {
   const data: Order[] = [];
   const snapshots = await getDocs(collection(_db, "orders"));
   snapshots.forEach((doc) => {
-    const _serviceName = doc.data().serviceName;
+    const _tempServiceName = doc.data().servicesRequested;
+    let _serviceName = "";
+    if (_tempServiceName) {
+      Object.entries(_tempServiceName).forEach((name, ind) => {
+        if (ind < Object.entries(_tempServiceName).length - 1) {
+          _serviceName += ` ${name[0]} (Qty: ${name[1]}) &`;
+        } else {
+          _serviceName += ` ${name[0]} (Qty: ${name[1]})`;
+        }
+      });
+    }
     const _serviceStatus = doc.data().serviceStatus;
-    const _customerName = doc.data().customerName;
     const _customerPreferredTime = doc.data().customerPreferredTime;
 
     data.push({
       service_name: _serviceName,
       service_status: _serviceStatus,
-      customer_name: _customerName,
       customer_preferred_time: _customerPreferredTime,
     });
   });
@@ -287,7 +294,7 @@ const _userSignIn = async (userCredential: UserSignInCredential) => {
     if (signedInUser && "success") {
       return { isSignedIn: true };
     }
-  } catch (err) {
+  } catch (err: any) {
     console.log(err.code, err.message);
     return { isSignedIn: false, error: err.message };
   }

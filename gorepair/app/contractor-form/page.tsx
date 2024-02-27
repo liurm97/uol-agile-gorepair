@@ -2,8 +2,8 @@
 
 import { Box, Center, Fade, Heading, Text, VStack } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import RegistrationForm from "@/components/ContractorForm";
-import { firebaseObject } from "../config/firebaseConfig";
+import RegistrationForm from "../../components/ContractorForm";
+import { firebaseObject } from "../../config/firebaseConfig";
 
 export default function Form() {
   const [data, setData] = useState<{

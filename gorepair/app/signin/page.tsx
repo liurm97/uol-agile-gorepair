@@ -15,7 +15,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { firebaseObject } from "../config/firebaseConfig";
+import { firebaseObject } from "../../config/firebaseConfig";
 
 export default function SignInPage() {
   const [password, setPassword] = useState("");
