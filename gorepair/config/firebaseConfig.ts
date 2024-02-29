@@ -91,7 +91,7 @@ const _deleteSpecificService = async (
   // go through the collection and filter document reference id and delete it from the collection
   getDocs(q).then((snapshots) => {
     snapshots.forEach((data) => {
-      if (counter == indDocIdToDelete) {
+      if (counter == Number(indDocIdToDelete)) {
         try {
           _deleteService(data.id);
         } catch (err) {
@@ -109,7 +109,7 @@ const _deleteSpecificService = async (
  */
 const _deleteService = async (docID: string) => {
   try {
-    await getDoc(doc(_db, "services", docID));
+    await deleteDoc(doc(_db, "services", docID));
   } catch (err) {
     throw err;
   }
