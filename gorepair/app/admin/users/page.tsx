@@ -14,7 +14,7 @@ import AdminLayout from "../../layouts/admin";
 import { firebaseObject } from "../../../config/firebaseConfig";
 
 export default function DataTables() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const getUsers = async () => {

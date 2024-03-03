@@ -15,7 +15,7 @@ import { firebaseObject } from "../../../config/firebaseConfig";
 
 // export default async function Orders() {
 export default function Orders() {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const getOrders = async () => {
