@@ -13,7 +13,7 @@ import AdminLayout from "../../layouts/admin";
 import { firebaseObject } from "../../../config/firebaseConfig";
 import React, { useEffect, useState } from "react";
 export default function DataTables() {
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const getServices = async () => {
