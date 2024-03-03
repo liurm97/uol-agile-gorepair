@@ -347,13 +347,13 @@ type contractorSignUpCredential = {
 };
 
 const _insertIntoContractorPlatformRequestCollection = async (
-  contractorCredential: contractorSignUpCredential
+  contractorCredential: contractorSignUpCredential | undefined
 ) => {
   try {
     await addDoc(collection(_db, "contractor_platform_requests"), {
-      email: contractorCredential.email,
-      full_name: contractorCredential.name,
-      service: contractorCredential.service,
+      email: contractorCredential?.email,
+      full_name: contractorCredential?.name,
+      service: contractorCredential?.service,
     });
     return "success";
   } catch (err) {

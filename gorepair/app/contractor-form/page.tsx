@@ -5,12 +5,14 @@ import React, { useEffect, useRef, useState } from "react";
 import RegistrationForm from "../../components/ContractorForm";
 import { firebaseObject } from "../../config/firebaseConfig";
 
+type contractorSignUpCredential = {
+  name: string;
+  email: string;
+  service: string;
+};
+
 export default function Form() {
-  const [data, setData] = useState<{
-    name: string;
-    email: string;
-    service: string;
-  }>();
+  const [data, setData] = useState<contractorSignUpCredential>();
 
   const isInitialMount = useRef(true);
 
