@@ -38,6 +38,7 @@ const columnHelper = createColumnHelper<RowObj>();
 
 // const columns = columnsDataCheck;
 export default function ComplexTable(props: { tableData: any }) {
+  console.log(props);
   const { tableData } = props;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue("secondaryGray.900", "white");

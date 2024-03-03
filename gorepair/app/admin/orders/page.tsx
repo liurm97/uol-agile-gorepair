@@ -9,21 +9,39 @@ import tableDataDevelopment from "../../views/admin/dataTables/variables/tableDa
 import tableDataCheck from "../../views/admin/dataTables/variables/tableDataCheck";
 import tableDataColumns from "../../views/admin/dataTables/variables/tableDataColumns";
 import tableDataComplex from "../../views/admin/dataTables/variables/tableDataComplex";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/admin";
 import { firebaseObject } from "../../../config/firebaseConfig";
 
-export default async function Orders() {
-  console.log(await firebaseObject.retrieveOrders());
+// export default async function Orders() {
+export default function Orders() {
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const getOrders = async () => {
+      const _orders = await firebaseObject.retrieveOrders();
+      console.log("setting orders");
+      setOrders(_orders);
+      setIsLoading(false);
+    };
+    getOrders();
+  }, []);
+  // firebaseObject.retrieveOrders().then((orders) => {
   return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      <SimpleGrid
-        mb="20px"
-        columns={{ sm: 1, md: 1 }}
-        spacing={{ base: "20px", xl: "20px" }}
-      >
-        <ComplexTable tableData={await firebaseObject.retrieveOrders()} />
-      </SimpleGrid>
-    </Box>
+    <>
+      {isLoading ? (
+        <p>page is loading</p>
+      ) : (
+        <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+          <SimpleGrid
+            mb="20px"
+            columns={{ sm: 1, md: 1 }}
+            spacing={{ base: "20px", xl: "20px" }}
+          >
+            <ComplexTable tableData={orders} />
+          </SimpleGrid>
+        </Box>
+      )}
+    </>
   );
 }

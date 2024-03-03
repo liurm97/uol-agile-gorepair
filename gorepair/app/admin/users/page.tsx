@@ -9,20 +9,36 @@ import ServiceTableDataDevelopment from "../../views/admin/dataTables/variables/
 import tableDataCheck from "../../views/admin/dataTables/variables/tableDataCheck";
 import tableDataColumns from "../../views/admin/dataTables/variables/tableDataColumns";
 import tableDataComplex from "../../views/admin/dataTables/variables/tableDataComplex";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/admin";
 import { firebaseObject } from "../../../config/firebaseConfig";
 
-export default async function DataTables() {
+export default function DataTables() {
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const getUsers = async () => {
+      const _users = await firebaseObject.retrieveUsers();
+      setUsers(_users);
+      setIsLoading(false);
+    };
+    getUsers();
+  }, []);
   return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      <SimpleGrid
-        mb="20px"
-        columns={{ sm: 1, md: 1 }}
-        spacing={{ base: "20px", xl: "20px" }}
-      >
-        <DevelopmentTable tableData={await firebaseObject.retrieveUsers()} />
-      </SimpleGrid>
-    </Box>
+    <>
+      {isLoading ? (
+        <p>Loading Content</p>
+      ) : (
+        <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+          <SimpleGrid
+            mb="20px"
+            columns={{ sm: 1, md: 1 }}
+            spacing={{ base: "20px", xl: "20px" }}
+          >
+            <DevelopmentTable tableData={users} />
+          </SimpleGrid>
+        </Box>
+      )}
+    </>
   );
 }
