@@ -132,27 +132,6 @@ export default function Banner(props: { [x: string]: any }) {
 						</Text>
 					</Flex>
 				</MenuItem>
-				<MenuItem
-					transition='0.2s linear'
-					color={textColor}
-					_hover={textHover}
-					p='0px'
-					borderRadius='8px'
-					_active={{
-						bg: 'transparent'
-					}}
-					_focus={{
-						bg: 'transparent'
-					}}
-					as='a'
-					href='/admin/profile'>
-					<Flex align='center'>
-						<Icon as={MdOutlineSettings} h='16px' w='16px' me='8px' />
-						<Text fontSize='sm' fontWeight='400'>
-							Profile
-						</Text>
-					</Flex>
-				</MenuItem>
 			</MenuList>
 		</Menu>
 	);
