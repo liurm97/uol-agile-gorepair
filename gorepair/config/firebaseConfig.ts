@@ -47,13 +47,8 @@ const _auth = getAuth(_app);
  * @param {string} _category
  */
 
-type Category = {
-  service: string;
-  price: string;
-  id: string;
-};
 const _retrieveSpecificServiceCategory = async (_category: string) => {
-  const data: Category[] = [];
+  const data: any[] = [];
 
   // filter data in the `services` collection by category
   const q = query(
@@ -337,8 +332,12 @@ const _elevatedUserSignIn = async (
   } catch (err) {
     return { role: _role, isSuccess: _isSuccess, message: _message };
   }
-  // console.log({ role: _role, isSuccess: _isSuccess, message: _message });
 };
+
+// ================== Validate admin / contractor ================= //
+// const validateElevatedUser = async (): Promise<boolean> => {
+//   c;
+// };
 
 // ================== Become a Contractor Sign Up ================= //
 type contractorSignUpCredential = {
@@ -496,4 +495,6 @@ export const firebaseObject = {
 
   // elevated users sign in
   elevatedUserSignIn: _elevatedUserSignIn,
+
+  // validate admin/contractor for admin panel pages
 };
