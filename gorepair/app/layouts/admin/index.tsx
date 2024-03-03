@@ -6,7 +6,7 @@ import Navbar from "../../../components/components/navbar/NavbarAdmin";
 import Sidebar from "../../../components/components/sidebar/Sidebar";
 import { SidebarContext } from "../../contexts/SidebarContext";
 import { PropsWithChildren, useEffect, useState } from "react";
-import routes from "routes";
+import routes from "../../routes";
 import {
   getActiveNavbar,
   getActiveNavbarText,
