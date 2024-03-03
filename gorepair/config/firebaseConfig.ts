@@ -300,6 +300,46 @@ const _userSignIn = async (userCredential: UserSignInCredential) => {
   }
 };
 
+// ================== Admin user Sign In ================= //
+// For security reasons, admin users have to be manually inserted into the `users` collection
+// Authenticate by combination of email + password + role
+
+type elevatedUserSignInOutput = {
+  role: string;
+  isSuccess: boolean;
+  message?: string;
+};
+
+const _elevatedUserSignIn = async (
+  email: string,
+  password: string
+): Promise<elevatedUserSignInOutput> => {
+  // query `admin_contractor_users` collection to check if user is valid
+
+  let _role = "undefined";
+  let _isSuccess = false;
+  let _message: string | undefined = undefined;
+  try {
+    const q = query(
+      collection(_db, "admin_contractor_users"),
+      where("email", "==", email),
+      where("password", "==", password)
+    );
+    const snapshots = await getDocs(q);
+    snapshots.docs.length == 0
+      ? (_message = "Error: Incorrect username or password. Please try again.")
+      : snapshots.forEach((doc) => {
+          _role = doc.data().role;
+          _isSuccess = true;
+          _message = "Success";
+        });
+    return { role: _role, isSuccess: _isSuccess, message: _message };
+  } catch (err) {
+    return { role: _role, isSuccess: _isSuccess, message: _message };
+  }
+  // console.log({ role: _role, isSuccess: _isSuccess, message: _message });
+};
+
 // ================== Become a Contractor Sign Up ================= //
 type contractorSignUpCredential = {
   name: string;
@@ -453,4 +493,7 @@ export const firebaseObject = {
   // submit contractor registration form
   insertIntoContractorPlatformRequestCollection:
     _insertIntoContractorPlatformRequestCollection,
+
+  // elevated users sign in
+  elevatedUserSignIn: _elevatedUserSignIn,
 };
