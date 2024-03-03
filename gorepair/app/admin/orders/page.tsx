@@ -26,11 +26,10 @@ export default function Orders() {
     };
     getOrders();
   }, []);
-  // firebaseObject.retrieveOrders().then((orders) => {
   return (
     <>
       {isLoading ? (
-        <p>page is loading</p>
+        <p>Loading Content</p>
       ) : (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
           <SimpleGrid

@@ -28,7 +28,7 @@ export default function DataTables() {
   return (
     <>
       {isLoading ? (
-        <p>page is loading</p>
+        <p>Loading Content</p>
       ) : (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
           <SimpleGrid
