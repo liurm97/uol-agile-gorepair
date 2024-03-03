@@ -5,6 +5,7 @@ import {
 	Icon,
 	Flex,
 	Text,
+	Button,
 	Menu,
 	MenuButton,
 	MenuItem,
@@ -42,19 +43,18 @@ export default function Banner(props: { [x: string]: any }) {
 	return (
 		<Menu isOpen={isOpen1} onClose={onClose1}>
 			<MenuButton
+				as={Button}
 				alignItems='center'
 				justifyContent='center'
-				bg={bgButton}
 				_hover={bgHover}
 				_focus={bgFocus}
 				_active={bgFocus}
-				w='37px'
 				h='37px'
 				lineHeight='100%'
 				onClick={onOpen1}
 				borderRadius='10px'
-				{...rest}>
-				<Icon as={MdOutlineMoreHoriz} color={iconColor} w='24px' h='24px' />
+				>
+				Menus >
 			</MenuButton>
 			<MenuList
 				w='150px'
@@ -78,11 +78,13 @@ export default function Banner(props: { [x: string]: any }) {
 					_focus={{
 						bg: 'transparent'
 					}}
-					mb='10px'>
+					mb='10px'
+					as='a'
+					href='/admin/users'>
 					<Flex align='center'>
 						<Icon as={MdOutlinePerson} h='16px' w='16px' me='8px' />
 						<Text fontSize='sm' fontWeight='400'>
-							Panel 1
+							Users
 						</Text>
 					</Flex>
 				</MenuItem>
@@ -98,11 +100,13 @@ export default function Banner(props: { [x: string]: any }) {
 					_focus={{
 						bg: 'transparent'
 					}}
-					mb='10px'>
+					mb='10px'
+					as='a'
+					href='/admin/orders'>
 					<Flex align='center'>
 						<Icon as={MdOutlineCardTravel} h='16px' w='16px' me='8px' />
 						<Text fontSize='sm' fontWeight='400'>
-							Panel 2
+							Orders
 						</Text>
 					</Flex>
 				</MenuItem>
@@ -118,11 +122,13 @@ export default function Banner(props: { [x: string]: any }) {
 					_focus={{
 						bg: 'transparent'
 					}}
-					mb='10px'>
+					mb='10px'
+					as='a'
+					href='/admin/services'>
 					<Flex align='center'>
 						<Icon as={MdOutlineLightbulb} h='16px' w='16px' me='8px' />
 						<Text fontSize='sm' fontWeight='400'>
-							Panel 3
+							Services
 						</Text>
 					</Flex>
 				</MenuItem>
@@ -137,11 +143,13 @@ export default function Banner(props: { [x: string]: any }) {
 					}}
 					_focus={{
 						bg: 'transparent'
-					}}>
+					}}
+					as='a'
+					href='/admin/profile'>
 					<Flex align='center'>
 						<Icon as={MdOutlineSettings} h='16px' w='16px' me='8px' />
 						<Text fontSize='sm' fontWeight='400'>
-							Panel 4
+							Profile
 						</Text>
 					</Flex>
 				</MenuItem>
