@@ -25,7 +25,7 @@
     "@testing-library/user-event": "^12.8.3",
     "@types/jest": "^25.2.3",
     "apexcharts": "^3.35.2",
-    "firebase": "^10.8.0",
+    "firebase": "^10.9.0",
     "firebase-cli": "^1.2.0",
     "framer-motion": "^10.17.12",
     "next": "14.0.4",
